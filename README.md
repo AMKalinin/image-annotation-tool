@@ -1,9 +1,9 @@
 # Markup
 
 ### 1. Требования
-python 3.7
-pyqt5
-pandas
+    python 3.7
+    pyqt5
+    pandas
 
 ### 2. Структура
 
