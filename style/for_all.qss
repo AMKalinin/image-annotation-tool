@@ -1,0 +1,15 @@
+* {
+    font-style: normal;
+    text-align: bottom;
+    font-size: 14px;
+    font-family: "Nunito Sans"; 
+    background-color: #E7E7E9;   }
+
+QTreeWidget {
+    background-color: #F6F8FA;
+
+}
+
+QListWidget {
+    background-color: #F6F8FA;
+}

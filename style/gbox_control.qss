@@ -1,0 +1,35 @@
+QGroupBox#project_control_box
+{
+    min-width: 500px;    min-height: 250px;
+    max-width: 500px;   max-height: 1100px; 
+}
+
+QLabel#description_label
+{
+    background-color: #F6F8FA;  
+    qproperty-alignment: AlignTop;
+    /* text-decoration: underline; */
+
+    min-width: 350px;    min-height: 250px;
+    max-width: 450px;   max-height: 300px; 
+}
+
+taskDescription
+{
+    min-width: 500px;    min-height: 250px;
+    max-width: 500px;   max-height: 1100px; 
+
+}
+
+polygonTree
+{
+    min-width: 500px;    min-height: 250px;
+    max-width: 500px;   max-height: 1100px; 
+}
+
+polygonPalette 
+{
+    min-height: 100px;
+    max-height: 100px;
+
+}

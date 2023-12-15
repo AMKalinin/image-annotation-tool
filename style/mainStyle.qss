@@ -1,0 +1,241 @@
+* {
+    font-style: normal;
+    text-align: bottom;
+    font-size: 14px;
+    font-family: "Nunito Sans"; 
+    background-color: #E7E7E9;   }
+
+QTreeWidget {
+    background-color: #F6F8FA;
+
+}
+
+QListWidget {
+    background-color: #F6F8FA;
+}
+
+/* кнопка button_danger */
+QPushButton#button_danger
+{
+    background-color: #F6F8FA;
+    border: 2px solid #D5D8DA;
+    color: #D1303B;  /* ?????? */
+}
+
+/* кнопка при наведение мыши */
+QPushButton:hover#button_danger
+{
+    border-color: #EAA7AD;
+}
+
+/* кнопка при клике мыши */
+QPushButton:pressed#button_danger
+{
+    background-color:  #D42A45;
+    border-color: #901125;
+    color: #FFFFFF;
+}
+/* button_primary */
+QPushButton#button_primary
+{
+    background-color: #2DA44E;
+    border: 2px solid #2A9147;
+    border-radius: 5px;
+    color: #FFFFFF;
+    min-width: 100px;    min-height: 25px;
+    max-width: 150px;   max-height: 30px;
+}
+
+/* кнопка при наведение мыши */
+QPushButton:hover#button_primary
+{
+    border: 2px solid #ABDBB9;
+}
+
+/* кнопка при клике мыши */
+QPushButton:pressed#button_primary
+{
+    background-color:  #298E46;
+    border: 2px solid #277E41;
+}
+
+/* test import*/ 
+/* button_default */
+QPushButton
+{
+    background-color: #F6F8FA;
+    border: 2px solid #D5D8DA;
+    border-radius: 5px;
+    min-width: 250px;    min-height: 25px;
+    max-width: 350px;   max-height: 30px;
+}
+
+/* кнопка при наведении мыши */
+QPushButton:hover
+{
+    border: 2px solid #B4D2F3;
+}
+
+/* кнопка при клике мыши */
+QPushButton:pressed
+{
+    background-color:  #EEEFF2;
+    border: 2px solid #CFD0D3;
+}
+
+QPushButton#images
+{
+    background-color: #FFFFFF;
+    border: 2px solid #D5D8DA;
+    border-radius: 0px;
+    border-style: dashed;
+    min-width: 50px;    min-height: 50px;
+    max-width: 100000px;    max-height: 100000px;
+    text-align: center
+}
+QPushButton#images:hover
+{
+    border: 2px solid #A4D0FC;
+    border-style: dashed;
+}
+QProgressBar
+{
+    border: 1px solid #aaaaaa;
+    background: white;
+    border-radius: 5px;
+    text-align:center;
+    min-height: 16px;
+    max-height: 16px;
+    color: white;
+}
+
+QProgressBar::chunk
+{
+    background: qlineargradient(x1:0, y1:1, x2:1, y2:0,
+                                stop:0 #53B96A,
+                                stop:0.25 #53B96A,
+                                stop:0.250001 #28A745,
+                                stop:0.5 #28A745,
+                                stop:0.500001 #53B96A,
+                                stop:0.75 #53B96A,
+                                stop:0.750001 #28A745,
+                                stop:1 #28A745);
+    width: 20px;
+}
+QGroupBox
+{
+    background-color: #F6F8FA;
+    padding-top: 30px;
+    /*
+    min-width: 350px;    min-height: 250px;
+    max-width: 450px;   max-height: 900px; */
+}
+
+QLabel#gbox
+{
+     background-color: #F6F8FA; 
+    /* text-align: top right; */
+    /* text-decoration: underline; */
+    /*
+    min-width: 350px;    min-height: 250px;
+    max-width: 450px;   max-height: 300px; */
+}
+
+
+QGroupBox#project_control_box
+{
+    min-width: 500px;    min-height: 250px;
+    max-width: 500px;   max-height: 1100px; 
+}
+
+QLabel#description_label
+{
+    background-color: #F6F8FA;  
+    qproperty-alignment: AlignTop;
+    /* text-decoration: underline; */
+
+    min-width: 350px;    min-height: 250px;
+    max-width: 450px;   max-height: 300px; 
+}
+
+taskDescription
+{
+    min-width: 500px;    min-height: 250px;
+    max-width: 500px;   max-height: 1100px; 
+
+}
+
+polygonTree
+{
+    min-width: 500px;    min-height: 250px;
+    max-width: 500px;   max-height: 1100px; 
+}
+
+polygonPalette 
+{
+    min-height: 100px;
+    max-height: 100px;
+
+}
+QLabel#aerial_attr {
+    min-width: 250px;    min-height: 20px;
+    max-width: 250px;   max-height: 20px; 
+    background-color: #F6F8FA;  
+}
+QLabel#solo {
+    background-color: #E7E7E9;   }
+QTabWidget::pane
+{
+    border-top: 40px solid #E7E7E9;
+    position: absolute;
+    top: -40px;
+}
+
+QTabWidget QScrollArea
+{
+    border: none;
+}
+QTabBar::tab
+{
+    min-width: 90px;
+    min-height: 38px;
+    /*background: #EEF0F5; */
+    border-bottom: 1px solid #E7E7E9;
+}
+QTabBar::tab:selected, QTabBar::tab:hover
+{
+    font-weight: Bold;
+    border-bottom: 1px solid #000000;
+}
+QScrollBar:vertical
+{
+     background: #EEF0F5;
+     min-width: 8px;
+     max-width: 8px;
+}
+
+QScrollBar:horizontal
+{
+     background: #EEF0F5;
+     min-height: 8px;
+     max-height: 8px;
+}
+
+QScrollBar::handle
+{
+/*ползунок*/
+    border-radius: 4px;
+    background: #CCCBCE;
+    min-height: 20px;
+}
+QScrollBar::add-line,
+QScrollBar::sub-line,
+QScrollBar::up-arrow,
+QScrollBar::down-arrow,
+QScrollBar::add-page,
+QScrollBar::sub-page
+{
+    background: #EEF0F5;
+}
+QLineEdit {
+    background-color: #F6F8FA;   }
