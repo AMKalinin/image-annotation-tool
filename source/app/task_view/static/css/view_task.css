@@ -1,0 +1,115 @@
+.Workarea {  
+    display: grid;
+    /* grid-template-rows: 0.1fr 1.9fr; */
+    grid-template-columns: 2.4fr 0.6fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        /* "tool_view control_edit" */
+        "view control_edit";
+    grid-area: Workarea;
+}
+
+.tool_view { 
+    z-index: 100;
+    pointer-events: none;
+    grid-area: view; 
+    position: relative;
+    height: 40px;
+}
+
+.view { 
+    grid-area: view;
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    background: #F6F8FA;
+    height: 93vh;
+}
+
+.control_edit { 
+    grid-area: control_edit;
+    display: grid; 
+    grid-template-columns:  1fr; 
+    grid-template-rows: 0.3fr 1.7fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "tool_mask"
+        "masks_list";
+    overflow: auto;
+    /* height: 94vh; */
+}
+
+
+.tool_mask{
+    grid-area: tool_mask;
+}
+
+.masks_list{
+    grid-area: masks_list;
+    height: 88vh; 
+    overflow: auto;
+}
+
+#canvas_block{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+#svg { /* <= optional, for responsiveness */
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    /* top:0;
+    left: 0; */
+}
+
+#show_all img, #hide_all img{
+    height: 50px;
+    width: 50px;
+    float:right;
+}
+
+#status_string{
+    position: relative;
+    top: 14px;
+}
+
+#status_block{
+    border-radius: 6px;
+}
+
+.tool_chng_status{
+    pointer-events: none;
+    position: absolute;
+    height: 100px;
+    bottom: -50px;
+    width: 20vw;
+    text-align: center;
+}
+
+.btn_chng_status{
+    pointer-events:all;
+    width: 90px;
+    height: 25px;
+    
+    border-radius: 6px;
+}
+#btn_chng_status_ret{
+    color: #D1303B;
+
+    background: #F6F8FA;
+    border: 1px solid #D5D8DA;
+}
+
+#btn_chng_status_done{
+    color: white;
+    
+    background: #2DA44E;
+    border: 1px solid #2A9147;
+    margin-left: 20%;
+}

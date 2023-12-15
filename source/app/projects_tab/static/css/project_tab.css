@@ -1,0 +1,82 @@
+.project_list
+{   
+    height: 94vh;
+    position: relative;
+    overflow: auto;
+}
+
+.project_list_a
+{   
+    height: 87vh;
+    position: relative;
+    overflow: auto;
+}
+
+.create_project_tools{
+    position: relative;
+    top: 20px;
+    left: 30px;
+    margin-bottom: 30px;
+}
+
+.create_project_tools button{
+    border-radius: 6px;
+    height: 35px;
+    font-size: 90%;
+}
+
+#createBased{
+    background: #F6F8FA;
+    border: 1px solid #D5D8DA;
+    color: #24292F;
+}
+
+#createNew{
+    background: #2DA44E;
+    border: 1px solid #2A9147;
+    color: #FFFFFF;
+    margin-right: 45px;
+}
+
+
+.context-menu {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    padding: 12px 0;
+    width: 100px;
+    background-color: #fff;
+    border: solid 1px #dfdfdf;
+    box-shadow: 1px 1px 2px #cfcfcf;
+  }
+  
+  .context-menu--active {
+    display: block;
+  }
+  
+  .context-menu__items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .context-menu__item {
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .context-menu__item:last-child {
+    margin-bottom: 0;
+  }
+  
+  .context-menu__link {
+    display: block;
+    padding: 4px 12px;
+    color: #0066aa;
+    text-decoration: none;
+  }
+  
+  .context-menu__link:hover {
+    color: #fff;
+    background-color: #0066aa;
+  }

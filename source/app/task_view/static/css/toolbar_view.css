@@ -1,0 +1,44 @@
+ul.toolbar_view
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.58);
+    top: 0;
+    left: 0;
+    height: 100%;
+    text-align: center;
+}
+
+li.tool_item{
+    float: left;
+    margin: 0.5%;
+    pointer-events: all;
+}
+
+li.tool_item.arrow{
+    height: 40px;
+    position: relative;
+    left: 45%;
+    display: block;
+}
+
+li.tool_item img{
+    width: 29px;
+    height: 29px;
+}
+
+li.tool_item.size{
+    float: right;
+    filter: invert(1);
+}
+
+li.tool_item.size.text{
+    filter: invert(0);
+    text-align: center;
+}
+
+#mashtab{
+    margin-top: 2px;
+}

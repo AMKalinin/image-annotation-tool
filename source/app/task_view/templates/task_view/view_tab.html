@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block Workarea %}
+    <link type="text/css" href="{{url_for('.static', filename='css/view_task.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{url_for('general.static', filename='css/maska.css')}}" rel="stylesheet" />
+    <div class="tool_view">
+      {% include 'task_view/toolbar_view.html'%}
+    </div>
+    <div class="view">
+      {% if project_name %}
+        <script type="text/javascript" src="{{url_for('.static', filename='js/svg/svg.min.js')}}"></script>  
+        <div id="canvas_block"></div>
+        <svg id="svg" oncontextmenu="{return false;}"></svg>
+        </svg>
+      {% else %}
+        <h1>Проект не открыт</h1>
+      {% endif %}
+    </div> 
+
+    <div class="control_edit">
+      <div class="tool_mask">
+          {% if task_status == '__0__' or task_status == '__1__'%}
+              <label id="status_string">Status: <a id="status_block" style="background-color: rgba(177, 199, 255, 0.43);"> &nbsp  To do / In progres  &nbsp</a></label>
+          {% elif  task_status == '__2__'%}
+              <label id="status_string">Status: <a id="status_block" style="background-color: rgba(245, 252, 167, 0.43);"> &nbsp  Inspection  &nbsp</a></label>
+          {% elif  task_status == '__3__'%}
+              <label id="status_string">Status: <a id="status_block" style="background-color: #2DA44E;"> &nbsp  Done  &nbsp</a></label>
+          {% endif %}
+          <a id="show_all"><img src="{{url_for('general.static', filename='img/show.svg')}}" title="Показать все маски"></a>
+          <a id="hide_all" style="display: none;"><img src="{{url_for('general.static', filename='img/hide.svg')}}" title="Скрыть все маски"></a>
+      </div>
+      <div class="masks_list">
+          {% for mask in masks_list %}
+              {% include 'maska.html' %}
+          {% endfor %}
+      </div>
+
+      <div class="tool_chng_status">
+        {% if (task_status == '__0__' or task_status == '__1__') and (user.role == 'Admin' or user.role == 'Marker')%}
+          <button class="btn_chng_status" id="btn_chng_status_done">Done</button>
+          {% elif task_status == '__2__' and (user.role == 'Admin' or user.role == 'Inspector')%}
+            <button class="btn_chng_status" id="btn_chng_status_ret">Mistakes</button>
+            <button class="btn_chng_status" id="btn_chng_status_done">Done</button>
+          {% endif %}
+      </div>
+
+    </div>  
+
+    <script type="text/javascript" src="{{url_for('general.static', filename='js/maska.js')}}"></script> 
+    <script type="text/javascript" src="{{url_for('.static', filename='js/view.js')}}"></script> 
+{% endblock %}

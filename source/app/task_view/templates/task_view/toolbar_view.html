@@ -1,0 +1,30 @@
+<link type="text/css" href="{{url_for('.static', filename='css/toolbar_view.css')}}" rel="stylesheet" />
+{% if project_name %}
+    <ul class="toolbar_view" >
+        <li class="tool_item arrow"><a href="/view/{{project_name}}/0"><img src="{{url_for('general.static', filename='img/first.svg')}}" title="Первая картинка"></a></li>
+
+        {% if task_index == 0 %}
+            <li class="tool_item arrow" id="previous"><a href="/view/{{project_name}}/{{task_index}}"><img src="{{url_for('general.static', filename='img/previous.svg')}}" title="Предыдущая картинка"></a></li>
+        {% else %}
+            <li class="tool_item arrow" id="previous"><a href="/view/{{project_name}}/{{task_index-1}}"><img src="{{url_for('general.static', filename='img/previous.svg')}}" title="Предыдущая картинка"></a></li>
+        {% endif %}
+
+        {% if task_index == max_index %}
+            <li class="tool_item arrow" id="next"><a href="/view/{{project_name}}/{{task_index}}"><img src="{{url_for('general.static', filename='img/next.svg')}}"  title="Следующая картинка"></a></li>
+        {% else %}
+            <li class="tool_item arrow" id="next"><a href="/view/{{project_name}}/{{task_index+1}}"><img src="{{url_for('general.static', filename='img/next.svg')}}" title="Следующая картинка"></a></li>
+        {% endif %}
+        
+        <li class="tool_item arrow" id="last"><a  href="/view/{{project_name}}/{{max_index}}"><img src="{{url_for('general.static', filename='img/last.svg')}}" title="Последняя картинка"></a></li>
+
+    </ul>
+{% else %}
+    <ul class="toolbar_view" >
+        <li class="tool_item"><a><img src="{{url_for('general.static', filename='img/first.svg')}}"  title="Первая картинка"></a></li>
+        <li class="tool_item"><a><img src="{{url_for('general.static', filename='img/previous.svg')}}" title="Предыдущая картинка"></a></li>
+        <li class="tool_item"><a><img src="{{url_for('general.static', filename='img/next.svg')}}" title="Следующая картинка"></a></li>
+        <li class="tool_item"><a><img src="{{url_for('general.static', filename='img/last.svg')}}" title="Последняя картинка"></a></li>
+        <li class="tool_item"><a><img src="{{url_for('general.static', filename='img/done.svg')}}" title="Принять работу"></a></li>
+        <li class="tool_item"><a><img src="{{url_for('general.static', filename='img/return.svg')}}"  title="Вернуть на доработку"></a></li>
+    </ul>
+{% endif %}

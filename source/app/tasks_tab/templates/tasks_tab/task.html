@@ -1,0 +1,23 @@
+{% macro createTaskTODO(project_name, task)-%}
+    <fieldset class="task todo" draggable="true" id="{{task.index}}" name="/change_status/{{project_name}}/{{task.index}}">
+        <img draggable="false" class="img_task" src="{{url_for('general.task_icon', project_name=project_name, task_index=task.index)}}">
+        <div>
+            ID: {{task.index}}<br>
+            <button class="btn_edit" onclick="document.location='/task_edit/{{project_name}}/{{task.index}}'">Edit</button><br>
+        </div>
+    </fieldset>
+{%- endmacro %}
+
+
+{% macro createTaskTOCHECK(project_name, task)-%}
+    <fieldset class="task inspec" draggable="true" id="{{task.index}}" name="/change_status/{{project_name}}/{{task.index}}">
+        <img draggable="false" class="img_task"src="{{url_for('general.task_icon', project_name=project_name, task_index=task.index)}}">
+        <div>
+            ID: {{task.index}}<br>
+            <button class="btn_done" onclick="document.location='/view/{{project_name}}/{{task.index}}'">View</button>
+        </div>
+           
+    </fieldset>
+{%- endmacro %}
+
+

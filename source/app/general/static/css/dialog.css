@@ -1,0 +1,166 @@
+
+.modal {
+    position: fixed; /* фиксированное положение */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5); /* фон */
+    z-index: 1050;
+    opacity: 0; /* по умолчанию модальное окно прозрачно */
+    -webkit-transition: opacity 200ms ease-in; 
+    -moz-transition: opacity 200ms ease-in;
+    transition: opacity 200ms ease-in; /* анимация перехода */
+    pointer-events: none; /* элемент невидим для событий мыши */
+    margin: 0;
+    padding: 0;
+}
+/* При отображении модального окно */
+.modal:target {
+    opacity: 1; /* делаем окно видимым */
+	  pointer-events: auto; /* элемент видим для событий мыши */
+    overflow-y: auto; /* добавляем прокрутку по y, когда элемент не помещается на страницу */
+}
+/* ширина модального окна и его отступы от экрана */
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 10px;
+}
+@media (min-width: 576px) {
+  .modal-dialog {
+      max-width: 550px;
+      margin: 30px auto; /* отображение окна по центру */
+  }
+}
+/* Стили для блока с контентом окна */ 
+.modal-content {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    outline: 0;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+}
+@media (min-width: 768px) {
+  .modal-content {
+      -webkit-box-shadow: 0 5px 15px rgba(0,0,0,.5);
+      box-shadow: 0 5px 15px rgba(0,0,0,.5);
+  }
+}
+
+/* Стили кнопки "х" ("Закрыть")  */
+.close {
+    text-align: right;
+    float: right;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    text-decoration: none;
+}
+/* Стили для закрывающей кнопки в фокусе или наведении */
+.close:focus, .close:hover {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: .75;
+}
+
+.input_name{
+    position: relative;
+    float: right;
+    right: 50px;
+    width: 330px;
+}
+
+.input_description{
+    position: relative;
+    float: right;
+    right: 50px;
+    min-width: 330px;
+    max-width: 330px;
+
+    min-height: 130px;
+    max-height: 130px;
+}
+
+.p_description{
+    height: 135px;
+}
+.input_file{
+    position: relative;
+    float: right;
+    right: 50px;
+    width: 335px;
+}
+
+.createProjectBtn{
+    position: relative;
+    width: 93px;
+    height: 35px;
+    left: calc(50% - 93px/2);
+    /* top: 505px; */
+
+    background: #2DA44E;
+    border: 1px solid #2A9147;
+    border-radius: 6px;
+
+    color: #FFFFFF;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+#createBasedStep1{
+    width: 500px;
+    height: 160px;
+    padding: 0px;
+    border:  0;
+     background: #FFFFFF;
+}
+
+.selectProjectLabel{
+    position: absolute;
+    top: 48px;
+    left: 30px;
+}
+
+#selectProject{
+    width: 300px;
+    height: 20px;
+    background: #F6F8FA;
+    border: 1px solid #D9DBDE;
+    border-radius: 6px;
+}
+
+#selectProjectBtn{
+    position: absolute;
+    width: 93px;
+    height: 35px;
+    left: 203px;
+    top: 105px;
+
+    background: #2DA44E;
+    border: 1px solid #2A9147;
+    border-radius: 6px;
+}
+
+#createBasedStep2{
+    width: 550px;
+    border:0;
+}

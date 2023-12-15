@@ -1,0 +1,41 @@
+<fieldset class="maska">
+    <div class="color_img" style="background: {{mask.color}};"></div>
+    <div class="content_mask">
+        <label class="mask_index">Name: {{mask.name}}</label> <br>
+        <label class="check" ondblclick="event.stopPropagation();">
+            <input value="{{mask.points}};{{mask.color}}" type="checkbox" class="maska_view_check">
+            <span class="checkbox"></span>
+        </label>
+        {%if type_mask == 0 %}
+            <img class="delete_btn" src="{{url_for('general.static', filename='img/trash.svg')}}" title="Polygon" ondblclick="event.stopPropagation();">
+        {% endif %}
+
+        <label class="type">Type: {{ mask.type }} </label> <br>
+        {%if type_mask == 0 %}
+            <label>Class:   
+                <select class="select_class">
+                    {% if (mask.class_code == '000') %}
+                        <option value='{{project_name}};{{task_index}};{{mask.name}};{{mask.class_code}};{{mask.color}}'>Класс не выбран</option>
+                    {% else %}
+                        <option value='{{project_name}};{{task_index}};{{mask.name}};{{mask.class_code}};{{mask.color}}'>{{ mask.class_name }}</option>
+                        <option value='{{project_name}};{{task_index}};{{mask.name}};000;#c0c0c0'>Класс не выбран</option>
+                    {% endif %}
+
+                    {% for class in classes_list %}
+                    
+                        {% if (mask.class_code != class[0]) %}
+                            <option value='{{project_name}};{{task_index}};{{mask.name}};{{class[0]}};{{class[3]}}'>{{class[1]}}</option>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </select>
+            </label>
+        {% else %}
+            {% if (mask.class_code == '000') %}
+                <label>Class: не выбран</label>
+            {% else %}
+                <label class="text_label">Class: {{ mask.class_name }}</label>
+            {% endif %}
+        {% endif %}
+    </div>
+</fieldset>

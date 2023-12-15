@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  web_labeling:
+    container_name: web_labeling
+    image: gitlab.npomis.ru:5050/8_departament/neironet/web_labeling:latest
+    restart: always
+    volumes:
+      - ./source/projects:/app/projects
+      - ./source/logs:/app/logs
+      - ./source/app.db:/app/app.db
+    ports:
+      - 5003:5000
+    networks:
+      - web_labeling
+
+networks:
+  web_labeling:

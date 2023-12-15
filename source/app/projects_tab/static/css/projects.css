@@ -1,0 +1,28 @@
+.projects{
+    height: 180px;
+    border: 1px solid #E4E4E4;
+    margin:30px;
+    min-width: 890px;
+    position: sticky;
+}
+
+.img_icon{
+    margin-right: 25px;
+    width: 60px;
+    height: 60px;
+}
+
+.button_open_project{
+    position: absolute;
+    top: 20px; 
+    right: 20px;
+}
+
+.button_open_project button{
+    width: 90px;
+    height: 25px;
+    background: #F6F8FA;
+    border: 1px solid #D5D8DA;
+    border-radius: 6px;
+    font-size: 90%;
+}

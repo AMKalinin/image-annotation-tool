@@ -1,0 +1,76 @@
+
+
+{% set index = namespace(value=1) %}
+
+{% macro list_classes(list_of_class)-%}
+<ul>
+  {%for b_c in list_of_class -%}
+  <!-- <input type="checkbox" name="check{{index.value}}" value="{{b_c.base_name}}"> -->
+    <li>{{b_c.base_name}} {{add_subclass(b_c.class_name)}}</li>
+    {% set index.value = index.value + 1 %}
+  {%- endfor%}
+</ul>
+{%- endmacro %}
+
+{% macro add_subclass(list_of_class)-%}
+<ul>
+  {%for c in list_of_class -%}
+    <li>
+      <label>
+        <input type="checkbox" name="check{{index.value}}" value="{{c[0]}}:{{c[1]}}">{{c[0]}}:{{c[1]}} 
+      </label>
+    </li>
+    {% set index.value = index.value + 1 %}
+  {%- endfor %}
+</ul>
+{%- endmacro %}
+
+
+<div id="createProject" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <a href="#close" title="Close" class="close">×</a>
+      <form class="formCreateProj" action="/projects/upload", enctype="multipart/form-data" method="post" >
+        <p>Name<input class="input_name" type="text" name="projectName" value="" required></p>
+        <p class="p_description">Description<textarea class="input_description" name="projectDescription" value=""></textarea></p>
+        <p>Load file <input class="input_file" type="file" name="projectImg" value="" multiple></p>
+        <p>Choose classes
+          {{list_classes(classes_list)}}</p>
+        <p><input class="createProjectBtn" type="submit" value="Create"></p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<dialog id="createBasedStep1">
+  <a title="Close" class="close" onclick="document.getElementById('createBasedStep1').close()">×</a>
+  <form method="dialog">
+      <label class="selectProjectLabel">Project name:
+        <select id="selectProject">
+          <option value=""></option>
+          {% for project in projects_list %}
+            <option value="{{project.name}}">{{project.name}}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button id="selectProjectBtn">Create</button>
+  </form>
+</dialog>
+
+<dialog id="createBasedStep2">
+  <a title="Close" class="close" onclick="document.getElementById('createBasedStep2').close()">×</a><br>
+  <form class="formCreateProj" method="dialog" id="baseForm">
+      <div id="createProject">
+            <p>Name <input class="input_name" type="text" name="projectName" value="" required></p>
+            <p class="p_description">Description <input class="input_description" type="text" name="projectDescription" value=""></p>
+            <p>Load file <input class="input_file" type="file" name="projectImg" value="" multiple></p>
+            <p>Choose classes
+              {{list_classes(classes_list)}}</p>
+            <input type="hidden" id="projectBase" name="projectBase" value="">
+            <p><input class="createProjectBtn" id="send_data" type="submit" value="Create"></p>
+      </div>
+    <menu>
+      
+    </menu>
+  </form>
+</dialog>

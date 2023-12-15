@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block Workarea %}
+    <link type="text/css" href="{{url_for('.static', filename='css/task_edit.css')}}" rel="stylesheet" />
+    <link type="text/css" href="{{url_for('general.static', filename='css/maska.css')}}" rel="stylesheet" />
+    <div class="tool2">
+        {% include 'task_edit/toolbar2.html'%}
+    </div>
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script> -->
+    <script type="text/javascript" src="{{url_for('.static', filename='js/svg/svg.min.js')}}"></script>  
+    <div class="edit">
+        <div id="canvas_block"></div>
+        <svg id="svg" oncontextmenu="{return false;}"></svg>
+    </div>
+    <div class="control_edit">
+        <div class="tool_mask">
+            {% if task_status == '__0__' or task_status == '__1__'%}
+                <label id="status_string">Status: <a id="status_block" style="background-color: rgba(177, 199, 255, 0.43);"> &nbsp  Todo/Mistakes  &nbsp</a></label>
+            {% elif  task_status == '__2__'%}
+                <label id="status_string">Status: <a id="status_block" style="background-color: rgba(245, 252, 167, 0.43);"> &nbsp  Inspection  &nbsp</a></label>
+            {% elif  task_status == '__3__'%}
+                <label id="status_string">Status: <a id="status_block" style="background-color: #2DA44E;"> &nbsp  Done  &nbsp</a></label>
+            {% endif %}
+            
+            <a id="show_all"><img src="{{url_for('general.static', filename='img/show.svg')}}" title="Показать все маски"></a>
+            <a id="hide_all" style="display: none;"><img src="{{url_for('general.static', filename='img/hide.svg')}}" title="Скрыть все маски"></a>
+            <select id="mask_class_base">
+                <option value='000;#c0c0c0'>Класс не выбран</option>
+                {% for class in classes_list %}
+                    <option value='{{class[0]}};{{class[3]}}'>{{class[1]}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="masks_list">
+            {% for mask in masks_list %}
+                {% include 'maska.html' %}
+            {% endfor %}
+        </div>
+        <div class="tool_chng_status">
+            <button id="btn_chng_status">To inspection</button>
+        </div>
+    </div>   
+ 
+    <script type="text/javascript" src="{{url_for('general.static', filename='js/maska.js')}}"></script>   
+    <script type="text/javascript" src="{{url_for('.static', filename='js/task_edit.js')}}"></script>  
+{% endblock %}
