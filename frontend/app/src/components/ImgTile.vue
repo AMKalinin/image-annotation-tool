@@ -1,6 +1,6 @@
 <template>
     <img :id="(tile.j + tile.offsetX) + ':' + (tile.i+tile.offsetY) + ':' + tile.k" 
-    :src = "/task_tail/"
+    src = "./fgfgf.png"
     :alt="(tile.j + tile.offsetX) + ':' + (tile.i+tile.offsetY) + ':' + tile.k" 
 
     @click="testA"
