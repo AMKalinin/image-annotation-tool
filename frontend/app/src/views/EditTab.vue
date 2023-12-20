@@ -1,19 +1,17 @@
 <template>
     <div class="workarea">
         <Tool-Bar class="tool"></Tool-Bar>
-        <div class="edit">
-        </div>
-
-
-
+        <View-Edit class="edit"></View-Edit>
+        <div class="controlEdit"></div>
     </div>
 </template>
 
 <script>
 import ToolBar from '@/components/ToolBar.vue';
+import ViewEdit from '@/components/ViewEdit.vue';
 
 export default{
-    components:{ToolBar}
+    components:{ToolBar, ViewEdit}
 }
 </script>
 
@@ -24,12 +22,18 @@ export default{
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-template-areas:
-        "tool edit control_edit";
+        "tool edit controlEdit";
 }
 
 .tool {
     grid-area: tool;
     height: 100%;
 }
+
+.controlEdit {
+    grid-area: controlEdit;
+    height: 100%;
+}
+
 
 </style>
