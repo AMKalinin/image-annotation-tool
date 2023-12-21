@@ -1,9 +1,7 @@
 <template>
     <img :id="(tile.j + tile.offsetX) + ':' + (tile.i+tile.offsetY) + ':' + tile.k" 
-    src = "./fgfgf.png"
+    :src = "/task_tail/"
     :alt="(tile.j + tile.offsetX) + ':' + (tile.i+tile.offsetY) + ':' + tile.k" 
-
-    @click="testA"
 
     :style="{top:256*this.tile.i + this.tile.slideY +'px',
             left:256*this.tile.j + this.tile.slideX + 'px'}"
@@ -19,9 +17,18 @@ export default{
             required: true
         }
     },
+    mounted() {
+      this.message = this.testA();
+    },
     methods: {
         testA(){
-            console.log('hello')
+            console.log('this.$el.style.top')
+        },
+        moveTile(dx, dy){
+            let x = Number(this.$el.style.left.split('px')[0])
+            let y = Number(this.$el.style.top.split('px')[0])
+            this.$el.style.left = x + dx + 'px';
+            this.$el.style.top = y + dy  + 'px'; 
         }
     }
 }
