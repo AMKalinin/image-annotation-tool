@@ -8,43 +8,19 @@
 </template>
 
 <script>
-import TaskItem from './TaskItem.vue';
+import TaskItem from './TaskItem.vue'
+import axios from 'axios'
 
 export default{
     data(){
         return{
-            tasks: [{
-                id:0,
-                status:0},
-                {
-                id:1,
-                status:1},
-                {
-                id:2,
-                status:1},
-                {
-                id:3,
-                status:1},
-                {
-                id:4,
-                status:1},
-                {
-                id:5,
-                status:1},
-                {
-                id:6,
-                status:1},
-                {
-                id:7,
-                status:1},
-                {
-                id:8,
-                status:1},
-                {
-                id:9,
-                status:1}
-            ]
+            tasks: []
         }
+    },
+    mounted(){
+        axios.get('http://0.0.0.0:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks').then((response) => {
+            this.tasks = response.data
+        })
     },
     components:{TaskItem}
 }

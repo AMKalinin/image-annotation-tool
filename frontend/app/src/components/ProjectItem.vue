@@ -16,13 +16,13 @@
 
         <div>
             <p>
-                Tasks: {{ project.task.done }} / {{ project.task.all }} <br> <br>
-                Modified: {{ project.lastUpdate }}
+                <!-- Tasks: {{ project.task.done }} / {{ project.task.all }} <br> <br> -->
+                Modified: {{ project.last_update }}
             </p>
         </div>
         
         <div class="buttonOpenProject">
-            <button @click="$router.push('/tasks')">Open</button>
+            <button @click="$router.push({ path: `/tasks/${project.name}`})">Open</button>
         </div>
     </fieldset>
 </template>

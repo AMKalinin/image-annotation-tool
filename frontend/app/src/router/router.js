@@ -16,7 +16,7 @@ const routes = [
         component: ProjectsTab
     },
     {
-        path: '/tasks',
+        path: '/tasks/:projectName',
         component: TasksTab
     },
     {
@@ -24,7 +24,7 @@ const routes = [
         component: ViewTab
     },
     {
-        path: '/edit',
+        path: '/edit/:id',
         component: EditTab
     },
     {

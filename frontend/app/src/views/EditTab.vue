@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import ToolBar from '@/components/ToolBar.vue';
-import ViewEdit from '@/components/ViewEdit.vue';
+import ToolBar from '@/components/ToolBar.vue'
+import ViewEdit from '@/components/ViewEdit.vue'
 
 export default{
     components:{ToolBar, ViewEdit}

@@ -14,7 +14,6 @@
 
 <script>
 import TileNet from '@/components/TileNet.vue'
-import axios from 'axios'
 
 export default{
     data() {
@@ -38,11 +37,7 @@ export default{
     },
     mounted() {
     this.createNet(0,0)
-    // const resp = axios.get('http://localhost:8001/api/v1/projects')
-    // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-    axios.get('http://localhost:8001/api/v1/projects').then((response) => {
-            console.log(response.data)
-        })
+    console.log(this.$route.params.id)
     },
     methods: {
         createNet(topInd, leftInd){

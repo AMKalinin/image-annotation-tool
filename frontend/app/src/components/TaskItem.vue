@@ -3,8 +3,8 @@
         <img class="imgTask">
         <div>
             ID: {{task.id}}<br>
-            <div v-if="task.status == 0">
-                <button class="btnEdit" @click="$router.push('/edit')">Edit</button><br>
+            <div v-if="task.status == 'OK'">
+                <button class="btnEdit" @click="$router.push({ path: `/edit/${task.id}`})">Edit</button><br>
             </div>
             <div v-else>
                 <button class="btnView" @click="$router.push('/inspect')">Inspect</button><br>
