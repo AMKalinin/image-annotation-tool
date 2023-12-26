@@ -12,6 +12,7 @@
                 <img class="img_icon" src="{{url_for('general.task_icon', project_name=project.name, task_index=i)}}">
                 {% endfor %}
             {% endif %} -->
+            <img class="img_icon" :src="'http://localhost:8001/api/v1/projects/'+project.name+'/tasks/0/icon'">
         </div>
 
         <div>

@@ -1,10 +1,10 @@
 <template>
     <fieldset class="task" :id="task.id">
-        <img class="imgTask">
+        <img class="imgTask" :src="'http://localhost:8001/api/v1/projects/'+task.project_name+'/tasks/'+task.id+'/icon'">
         <div>
             ID: {{task.id}}<br>
             <div v-if="task.status == 'OK'">
-                <button class="btnEdit" @click="$router.push({ path: `/edit/${task.id}`})">Edit</button><br>
+                <button class="btnEdit" @click="$router.push({ path: `/edit/${task.project_name}/${task.id}`})">Edit</button><br>
             </div>
             <div v-else>
                 <button class="btnView" @click="$router.push('/inspect')">Inspect</button><br>
@@ -44,7 +44,7 @@ export default{
     margin-top: 10px;
 }
 
-.img_task{
+.imgTask{
     position:absolute; 
     top:8px;
     left:10px;

@@ -1,6 +1,5 @@
 <template>
     <div class="edit">
-        <!-- <script src="https://unpkg.com/vue@2.7.14/dist/vue.js"></script> -->
         <tile-net 
             id="tileNet" 
             :image-info="imageInfo"
@@ -37,7 +36,6 @@ export default{
     },
     mounted() {
     this.createNet(0,0)
-    console.log(this.$route.params.id)
     },
     methods: {
         createNet(topInd, leftInd){
@@ -71,17 +69,20 @@ export default{
             let str_id = img.id.split(':')
             img.width = 256
             img.height = 256
-            
+
+            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+
             //проверить на нужность
             img.onload = function() {   
                 let tmpImages = document.createElement('img')
-                tmpImages.src = "/task_tail/"+this.imageInfo.projectName+'/'+this.imageInfo.taskIndex+'/'+str_id[0]+"/"+str_id[1]+"/"+str_id[2]
+                tmpImages.src = avv
                 this.width = tmpImages.width
                 this.height = tmpImages.height
             }  
-
-            img.src = "/task_tail/"+this.imageInfo.projectName+'/'+this.imageInfo.taskIndex+'/'+str_id[0]+"/"+str_id[1]+"/"+str_id[2]
+            
+            img.src = avv
             img.alt = img.id
+            
             return img
         },
 

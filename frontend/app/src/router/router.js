@@ -24,7 +24,7 @@ const routes = [
         component: ViewTab
     },
     {
-        path: '/edit/:id',
+        path: '/edit/:projectName/:id',
         component: EditTab
     },
     {
