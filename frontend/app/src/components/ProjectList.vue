@@ -18,7 +18,7 @@ export default{
         }
     },
     mounted(){
-        axios.get('http://localhost:8001/api/v1/projects').then((response) => {
+        axios.get('http://api:8001/api/v1/projects').then((response) => {
             this.projects = response.data
         })
     },

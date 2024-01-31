@@ -170,10 +170,12 @@ RUN set -eux; \
 
 RUN pip install poetry
 
-WORKDIR /app/backend
+WORKDIR /app
 
-COPY . /app/backend
+COPY . /app
 
 RUN poetry install
 
-CMD [ "poetry", "run", "./run.sh" ]
+EXPOSE 8000
+
+# CMD [ "poetry", "run", "./run.sh" ]

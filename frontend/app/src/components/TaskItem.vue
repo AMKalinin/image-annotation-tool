@@ -1,6 +1,6 @@
 <template>
     <fieldset class="task" :id="task.id">
-        <img class="imgTask" :src="'http://localhost:8001/api/v1/projects/'+task.project_name+'/tasks/'+task.id+'/icon'">
+        <img class="imgTask" :src="'http://api:8001/api/v1/projects/'+task.project_name+'/tasks/'+task.id+'/icon'">
         <div>
             ID: {{task.id}}<br>
             <div v-if="task.status == 'OK'">
