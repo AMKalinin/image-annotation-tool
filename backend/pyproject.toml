@@ -17,6 +17,7 @@ psycopg2-binary = "^2.9.7"
 h5py = "^3.9.0"
 python-multipart = "^0.0.6"
 pillow = "^10.0.0"
+sqlalchemy-utils = "^0.41.1"
 
 
 [tool.poetry.group.dev.dependencies]
