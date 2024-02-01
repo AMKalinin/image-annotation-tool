@@ -7,8 +7,12 @@ services:
 
     container_name: backend
 
-    command: poetry run ./run.sh
+    command: poetry run ./run.sh 
 
+    # network_mode: "host"
+    depends_on:
+      - db
+      
     ports:
       - "8001:8001"
 
@@ -22,3 +26,19 @@ services:
 
     ports:
       - "8080:8080"
+
+  db:
+    image: postgres
+    # restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=qwerty
+    ports:
+      - '5432:5432'
+    # volumes: 
+    #   - db:/var/lib/postgresql/data
+
+
+# volumes:
+#   db:
+#     driver: local
