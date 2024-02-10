@@ -70,7 +70,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://api:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = '/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   

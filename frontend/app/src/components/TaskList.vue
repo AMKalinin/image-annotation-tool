@@ -18,7 +18,7 @@ export default{
         }
     },
     mounted(){
-        axios.get('http://0.0.0.0:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks').then((response) => {
+        axios.get('/projects/'+this.$route.params.projectName+'/tasks').then((response) => {
             this.tasks = response.data
         })
     },

@@ -10,7 +10,7 @@ import router from './router/router';
 const app = createApp(App);
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = 'http://api:8001/';
+axios.defaults.baseURL = 'http://192.168.0.20:8001/api/v1';
 
 app.use(router)
 
