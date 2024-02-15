@@ -229,7 +229,31 @@ export default{
 
         moveAllImg(dx, dy){
             let tileNet = document.getElementById('tileNet')
-            let imgList = tileNet.getElementsByTagName('img');
+            let imgList = tileNet.getElementsByTagName('img')
+            let widthLast = imgList[imgList.length-1].width
+            let heightLast = imgList[imgList.length-1].height
+
+            if (widthLast === 0){widthLast = 256}
+  
+            if (heightLast === 0){heightLast = 256}
+
+            let heightNavBar = document.getElementsByClassName('navBar')[0].offsetHeight
+
+            if(Number(imgList[0].id.split(':')[1]) === 0 && dy>0 && Number(imgList[0].style.top.split('px')[0])>=0){
+                dy = 0
+            }
+            if (Number(imgList[imgList.length-1].style.top.split('px')[0])- 256 + heightLast < window.innerHeight- heightNavBar-256 && dy<0){        
+                dy = 0
+            }
+        
+            if(Number(imgList[0].id.split(':')[0]) === 0 && dx>0 && Number(imgList[0].style.left.split('px')[0])>=0 ){
+                dx = 0
+            }
+            if (Number(imgList[imgList.length-1].style.left.split('px')[0])- 256 + widthLast < tileNet.offsetWidth-256 && dx<0){
+                dx = 0
+            }
+
+
             for(let i=0; i<imgList.length; i++){
                 let x = Number(imgList[i].style.left.split('px')[0])
                 let y = Number(imgList[i].style.top.split('px')[0])
