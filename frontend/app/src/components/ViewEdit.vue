@@ -13,6 +13,7 @@
 
 <script>
 import TileNet from '@/components/TileNet.vue'
+import axios from 'axios'
 
 export default{
     data() {
@@ -35,9 +36,38 @@ export default{
         }
     },
     mounted() {
-    this.createNet(0,0)
+        this.getImageInfo()
+        this.createNet(0,0)
     },
     methods: {
+        getImageInfo(){
+            let tileNet = document.getElementById('tileNet')
+            this.imageInfo.projectName = this.$route.params.projectName
+            this.imageInfo.taskId = this.$route.params.id
+
+            let url = '/projects/' + this.imageInfo.projectName + '/tasks/' + this.imageInfo.taskId
+            axios.get(url).then((response) => {
+                this.imageInfo.fileName = response.data.file_name
+
+                this.imageInfo.height = response.data.height
+                this.imageInfo.width = response.data.width
+
+                this.imageInfo.countLayers = response.data.layers_count
+                this.imageInfo.curLayer = 0
+
+                this.imageInfo.countTileW = Math.ceil((this.imageInfo.width/2**this.imageInfo.curLayer)/256)
+                this.imageInfo.countTileH = Math.ceil((this.imageInfo.height/2**this.imageInfo.curLayer)/256)
+
+                this.imageInfo.curTileW = Math.ceil(tileNet.offsetWidth/256)
+                if(this.imageInfo.countTileW < this.imageInfo.curTileW){
+                    this.imageInfo.curTileW = this.imageInfo.countTileW;   
+                }
+
+                if(this.imageInfo.countTileH < this.imageInfo.curTileH){
+                    this.imageInfo.curTileH = this.imageInfo.countTileH;
+                }
+            })
+        },
         createNet(topInd, leftInd){
             while(leftInd + this.imageInfo.curTileW > this.imageInfo.countTileW){
                 this.imageInfo.curTileW -= 1 
@@ -317,11 +347,10 @@ export default{
         },
 
         updateCountTile(){
-            console.log(Math.ceil(2.5))
-            console.log(this.imageInfo.width/2, this.imageInfo.curLayer)
+            console.log('cur layer == ', this.imageInfo.curLayer)
             this.imageInfo.countTileW = Math.ceil((this.imageInfo.width/2**this.imageInfo.curLayer)/256);
             this.imageInfo.countTileH = Math.ceil((this.imageInfo.height/2**this.imageInfo.curLayer)/256);
-            console.log(this.imageInfo.countTileW, this.imageInfo.countTileW)
+            console.log(this.imageInfo.countTileW, this.imageInfo.countTileH)
         },
 
         dXdY(start, xy, point){
