@@ -45,13 +45,13 @@ class ProjectWorker():
                         height=img.size[1],
                         layers_count=count_layers,
                         status='OK')
-        self.add_task_db(db, task_in=task)
-
-        img_icon = img.resize((100,100))
-        task_folder.create_dataset('img_icon', data=np.asarray(img_icon, dtype='uint8'))    
+        self.add_task_db(db, task_in=task)  
         
         for i in range(count_layers):
             self.create_layer(task_folder, i, img)
+
+        img_icon = img.resize((100,100))
+        task_folder.create_dataset('img_icon', data=np.asarray(img_icon, dtype='uint8'))  
 
     def add_task_db(self, db:Session, task_in:TaskBase):
         crud.task.create(db, task_in)
@@ -71,10 +71,8 @@ class ProjectWorker():
                      layer_index:int, 
                      img:Image):
         desc = 2
-        if layer_index == 0:
-            desc = 1
-        width = int(img.size[0]/(desc))
-        height = int(img.size[1]/(desc))
+        width = int(img.size[0]/(desc**layer_index))
+        height = int(img.size[1]/(desc**layer_index))
         img = img.resize((width, height))
         layer = task_folder.create_group(f"layer_{layer_index}")
         for sampl_h in range(math.ceil(height/self.tile['height'])):
