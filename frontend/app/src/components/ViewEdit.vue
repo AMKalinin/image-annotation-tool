@@ -5,7 +5,7 @@
             :image-info="imageInfo" 
         />
         
-        <svg id="svg" oncontextmenu="{return false;}"></svg>
+        <svg id="canvas" oncontextmenu="{return false;}"></svg>
     </div>
 </template>
 
@@ -33,6 +33,7 @@ export default{
                 height: 2000
 
             }
+            // canvas: SVG('#canvas')
         }
     },
     mounted() {
@@ -293,10 +294,10 @@ export default{
         },
 
         getTile(event){
-            let cnv_mask = SVG('#svg')
-            cnv_mask.hide()
+            let canvas = SVG('#canvas')
+            canvas.hide()
             let tile = document.elementFromPoint(event.clientX, event.clientY)
-            cnv_mask.show()
+            canvas.show()
             if (tile.tagName === 'IMG'){
                 return tile    
             }
@@ -421,7 +422,7 @@ export default{
 
 
 
-#svg { /* <= optional, for responsiveness */
+#canvas { /* <= optional, for responsiveness */
     display: block;
     position: absolute;
     height: 100%;
