@@ -1,12 +1,11 @@
 <template>
-    <div class="edit">
+    <div class="edit" @wheel="onWheel" @mousedown="mouseMove">
         <tile-net 
             id="tileNet" 
-            :image-info="imageInfo"
-            @mousedown="mouseMove" 
-            @wheel="onWheel"/>
+            :image-info="imageInfo" 
+        />
         
-        <!-- <svg id="svg" oncontextmenu="{return false;}"></svg> -->
+        <svg id="svg" oncontextmenu="{return false;}"></svg>
     </div>
 </template>
 
@@ -14,6 +13,7 @@
 <script>
 import TileNet from '@/components/TileNet.vue'
 import axios from 'axios'
+import { SVG } from '@svgdotjs/svg.js'
 
 export default{
     data() {
@@ -100,7 +100,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://192.168.0.20:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   
@@ -293,9 +293,10 @@ export default{
         },
 
         getTile(event){
-            // cnv_mask.hide()
+            let cnv_mask = SVG('#svg')
+            cnv_mask.hide()
             let tile = document.elementFromPoint(event.clientX, event.clientY)
-            // cnv_mask.show()
+            cnv_mask.show()
             if (tile.tagName === 'IMG'){
                 return tile    
             }
@@ -410,4 +411,22 @@ export default{
     user-select:none;
     overflow: hidden;
 }
+
+#tileNet{
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
+
+#svg { /* <= optional, for responsiveness */
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+
 </style>
