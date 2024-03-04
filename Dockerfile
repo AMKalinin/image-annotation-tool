@@ -10,11 +10,15 @@ RUN conda install -c defaults --override-channels numpy
 
 RUN HDF5_MPI="ON" CC=mpicc pip install --no-binary=h5py h5py
 
-COPY . /app
-
 WORKDIR /app
 
+COPY  requirements.txt /app
+
+RUN mkdir logs projecs
+
 RUN pip install -r requirements.txt
+
+COPY . /app
 
 RUN chmod +x /app/run.py
 
