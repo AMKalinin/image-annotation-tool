@@ -23,22 +23,12 @@ export default{
                 topInd:0
             },
             imageInfo:{
-                curTileW:4,
-                countTileW: Math.ceil(2000/256),
-                curTileH:4,
-                countTileH: Math.ceil(2000/256),
-                curLayer:0,
-                countLayers:4,
-                width: 2000,
-                height: 2000
-
             }
             // canvas: SVG('#canvas')
         }
     },
     mounted() {
         this.getImageInfo()
-        this.createNet(0,0)
     },
     methods: {
         getImageInfo(){
@@ -64,9 +54,11 @@ export default{
                     this.imageInfo.curTileW = this.imageInfo.countTileW;   
                 }
 
+                this.imageInfo.curTileH = Math.ceil(tileNet.offsetHeight/256)
                 if(this.imageInfo.countTileH < this.imageInfo.curTileH){
                     this.imageInfo.curTileH = this.imageInfo.countTileH;
                 }
+                this.createNet(0,0) //по-хорошему убрать отсюда
             })
         },
         createNet(topInd, leftInd){
@@ -76,7 +68,6 @@ export default{
             while(topInd + this.imageInfo.curTileH > this.imageInfo.countTileH){
                 this.imageInfo.curTileH -= 1 
             }
-            
             for (let i=0; i < this.imageInfo.curTileH; i++){
                 for (let j=0; j < this.imageInfo.curTileW; j++){
                     let tileNet = document.getElementById('tileNet')
@@ -101,7 +92,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = 'http://192.168.0.20:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   
