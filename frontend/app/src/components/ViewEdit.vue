@@ -24,7 +24,6 @@ export default{
             },
             imageInfo:{
             }
-            // canvas: SVG('#canvas')
         }
     },
     mounted() {
