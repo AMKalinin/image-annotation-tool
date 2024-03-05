@@ -107,7 +107,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = 'http://192.168.0.20:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   
@@ -297,6 +297,12 @@ export default{
                 imgList[i].style.left = x + dx + 'px';
                 imgList[i].style.top = y + dy  + 'px';
             }
+            let canvas = SVG('#canvas')
+            canvas.each(function(){
+                let curTrans = this.transform();
+                this.transform({translateX: curTrans.translateX+dx, 
+                                translateY: curTrans.translateY+dy})
+            })
         },
 
         getTile(event){
@@ -367,6 +373,34 @@ export default{
             return [dx, dy]
         },
 
+        scaleSVG(flag, start){
+            let canvas = SVG('#canvas')
+            let coef;
+            if (flag === '+'){
+                coef = 2;
+            }
+            if (flag === '-'){
+                coef = 1/2;
+            }
+
+
+            if(this.curShape){
+                for(let i=0; i<this.curShape.points.length; i++){
+                    this.curShape.points[i] = [this.curShape.points[i][0]*coef, this.curShape.points[i][1]*coef]; 
+                }
+            }
+            canvas.each(function(){
+                if (this.type === 'polygon'){
+                    let a = this.array();
+                    for(let i=0; i<a.length; i++){
+                        a[i] = [a[i][0]*coef, a[i][1]*coef]; 
+                    }
+                    this.plot(a);   
+                    this.transform({translateX: -256*start[0], translateY: -256*start[1]});
+                }
+            }) 
+        },
+
         scaleImg(event, flag){
             let tile = this.getTile(event)
             if (!tile){
@@ -378,13 +412,13 @@ export default{
                 if (this.imageInfo.curLayer-1<0){return}
                 startNewTile = this.calcIdFirstBlock(tile, '+')
                 this.imageInfo.curLayer -= 1
-                // scaleSVG('+', startNewTile)
+                this.scaleSVG('+', startNewTile)
             }
             if(flag === '-'){
                 if (this.imageInfo.curLayer>=this.imageInfo.countLayers-1){return 1}
                 startNewTile = this.calcIdFirstBlock(tile, '-')
                 this.imageInfo.curLayer += 1
-                // scaleSVG('-', startNewTile)
+                this.scaleSVG('-', startNewTile)
             }
             this.deleteNet()
             this.updateCountTile();
