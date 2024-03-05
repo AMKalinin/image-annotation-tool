@@ -2,16 +2,17 @@
     <div class="workarea">
         <Tool-Bar class="tool"></Tool-Bar>
         <View-Edit class="edit"></View-Edit>
-        <div class="controlEdit"></div>
+        <control-edit></control-edit>
     </div>
 </template>
 
 <script>
 import ToolBar from '@/components/ToolBar.vue'
 import ViewEdit from '@/components/ViewEdit.vue'
+import ControlEdit from '@/components/ControlEdit.vue'
 
 export default{
-    components:{ToolBar, ViewEdit}
+    components:{ToolBar, ViewEdit, ControlEdit}
 }
 </script>
 
@@ -27,11 +28,6 @@ export default{
 
 .tool {
     grid-area: tool;
-    height: 100%;
-}
-
-.controlEdit {
-    grid-area: controlEdit;
     height: 100%;
 }
 

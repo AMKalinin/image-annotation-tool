@@ -1,0 +1,29 @@
+<template>
+    <div class="controlEdit">
+        <mask-list/>
+    </div>
+</template>
+
+<script>
+import MaskList from '@/components/MaskList.vue';
+
+export default{
+    components:{MaskList}
+}
+</script>
+
+<style>
+.controlEdit { 
+    grid-area: controlEdit;
+    display: grid; 
+    grid-template-columns:  1fr; 
+    grid-template-rows: 0.3fr 1.7fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "toolMask"
+        "maskList";
+    overflow: auto;
+    /* height: 94vh; */
+}
+</style>
