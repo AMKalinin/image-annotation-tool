@@ -1,11 +1,16 @@
 <template>
-    <div class="edit" @wheel="onWheel" @mousedown="mouseMove">
+    <div class="edit" @wheel="onWheel">
         <tile-net 
             id="tileNet" 
             :image-info="imageInfo" 
         />
-        
-        <svg id="canvas" oncontextmenu="{return false;}"></svg>
+        <svg 
+            id="canvas" 
+            oncontextmenu="{return false;}"
+            @mousedown="mouseDown"
+            @mousemove="mouseMove"
+            @mouseup="mouseUp"
+            ></svg>
     </div>
 </template>
 
@@ -18,6 +23,17 @@ import { SVG } from '@svgdotjs/svg.js'
 export default{
     data() {
         return {
+            curTool:'polygon',
+            curShape:{
+                points: [],
+                type: null,
+                code: '000',
+                tellApartDistance: 5,
+                pointIndex:-1,
+                object: null,
+                maskID: null,
+                group: null
+            },
             netInfo:{
                 leftInd:0,
                 topInd:0
@@ -91,7 +107,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://192.168.0.20:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   
@@ -231,22 +247,22 @@ export default{
         },
 
 
-        mouseMove(event){
-            let xy = null
-            if (event.button === 1){
-                window.onmousemove = (event)=>{
-                    if(event.buttons != 4){ return } // убирает залипание
-                    if(!xy){
-                        xy = [event.x, event.y]
-                    }
-                    let dx = event.x - xy[0]
-                    let dy = event.y - xy[1]
-                    xy = [event.x, event.y]
-                    this.moveAllImg(dx, dy)
-                    this.monitorNetChange()
-                }
-            }
-        },
+        // mouseMove(event){
+        //     let xy = null
+        //     if (event.button === 1){
+        //         window.onmousemove = (event)=>{
+        //             if(event.buttons != 4){ return } // убирает залипание
+        //             if(!xy){
+        //                 xy = [event.x, event.y]
+        //             }
+        //             let dx = event.x - xy[0]
+        //             let dy = event.y - xy[1]
+        //             xy = [event.x, event.y]
+        //             this.moveAllImg(dx, dy)
+        //             this.monitorNetChange()
+        //         }
+        //     }
+        // },
 
         moveAllImg(dx, dy){
             let tileNet = document.getElementById('tileNet')
@@ -379,9 +395,129 @@ export default{
 
         },
 
+        pointIt(event){
+            var pointX = parseInt(event.pageX)
+            var pointY = parseInt(event.pageY)
+            if (pointX < 0){pointX = 0}
+            if (pointY < 0){pointY = 0}
+            return [pointX, pointY]
+        },
+        
+        pointAtPos(pointWind){
+            let point;
+            let canvas = SVG('#canvas')
+            if (!this.curShape.object){
+                point = canvas.point(pointWind[0], pointWind[1])}
+            else{
+                point = this.curShape.object.point(pointWind[0], pointWind[1])
+            }
+            for  (let i = 0; i<this.curShape.points.length; i++){
+                if (this.distance([point.x, point.y], this.curShape.points[i]) < this.curShape.tellApartDistance){
+                    
+                    return i;
+                }
+            }
+            return -1;
+        },
+
+        distance(point1, point2){
+            let a = (point1[0] - point2[0])
+            let b = (point1[1] - point2[1])
+            let c = Math.pow((a*a + b*b), 0.5)
+            return c
+        },
+
+        drawPolygon(){
+            let canvas = SVG('#canvas')
+            if (!this.curShape.object){
+                this.curShape.object = canvas.polygon(this.curShape.points).fill('none').stroke({ width: 2,  color: '#000000'});
+                this.curShape.group = canvas.group();
+                let dxdy = this.firstOffset()
+                this.curShape.object.transform({translateX: dxdy[0], translateY: dxdy[1]})
+            }
+            else{
+                this.curShape.object.plot(this.curShape.points)
+                if (this.curShape.group){
+                    this.curShape.group.remove()
+                    this.curShape.group = canvas.group()
+                }
+            }
+            // drawGroup()
+        },
+
+        firstOffset(){
+            let tileNet = document.getElementById('tileNet')
+            let imgList = tileNet.getElementsByTagName('img')
+            let firstTile = imgList[0];
+            let dx =  Number(firstTile.style.left.split('px')[0])- Number(firstTile.id.split(':')[0])*256;
+            let dy =  Number(firstTile.style.top.split('px')[0]) - Number(firstTile.id.split(':')[1])*256;
+            return [dx, dy]
+        },
+
         onWheel(event){
             if (event.deltaY<0){ this.scaleImg(event, '+'); }
             else{ this.scaleImg(event, '-'); }
+        },
+
+        mouseDown(e){
+            // let tile1 = this.getTile(e)
+            // let point2 = this.getPointInImg(e, tile1)
+
+            let point1 = this.pointIt(e)
+
+            this.curShape.pointIndex = this.pointAtPos(point1)
+
+            let xy = null
+            if (e.button === 1){
+                window.onmousemove = (event)=>{
+                    if(event.buttons != 4){
+                        return
+                    }
+                    if(!xy){
+                        xy = [event.x, event.y]
+                    }
+                    let dx = event.x - xy[0]
+                    let dy = event.y - xy[1]
+                    xy = [event.x, event.y]
+                    this.moveAllImg(dx, dy)
+                    this.monitorNetChange()
+                }
+            }
+            else if(e.button === 2){
+                if (this.curTool === 'polygon'){
+                    if (this.curShape.pointIndex > -1){
+                        this.curShape.points.splice(this.curShape.pointIndex, 1)
+                        this.drawPolygon()
+                    }
+                }
+            }
+        },
+
+        mouseMove(event){
+            var pointWind = this.pointIt(event);
+            if (event.buttons === 1){
+                if (this.curTool === 'polygon' || this.curTool === 'line'){
+                    if (this.curShape.pointIndex > -1){
+                    let point = this.curShape.object.point(pointWind[0], pointWind[1]);
+                    this.curShape.points[this.curShape.pointIndex] = [point.x,point.y];
+                    this.drawPolygon();
+                    }
+                }
+            }
+        },
+        mouseUp(event){
+            if (event.button === 0){    
+                console.log(this.imageInfo)
+                if (this.curShape.pointIndex == -1){
+                    if (this.curTool === 'polygon'){
+                        let tile = this.getTile(event)
+                        let point = this.getPointInImg(event, tile)
+                        this.curShape.points.push([point[0]/Math.pow(2,this.imageInfo.curLayer), point[1]/Math.pow(2,this.imageInfo.curLayer)])
+                        this.drawPolygon()
+
+                    }
+                }
+            }
         }
     },
     components:{TileNet}

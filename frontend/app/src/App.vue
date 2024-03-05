@@ -38,6 +38,7 @@ export default{
     "Header"
     "Workarea";
   height: 100vh;
+  overflow: hidden;
 }
 
 .navbar{
