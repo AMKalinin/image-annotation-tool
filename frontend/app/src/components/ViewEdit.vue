@@ -45,6 +45,9 @@ export default{
     mounted() {
         this.getImageInfo()
     },
+    created() {
+        document.addEventListener('keydown', this.onKeyDown);
+    },
     methods: {
         getImageInfo(){
             let tileNet = document.getElementById('tileNet')
@@ -107,7 +110,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://192.168.0.20:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   
@@ -361,10 +364,8 @@ export default{
         },
 
         updateCountTile(){
-            console.log('cur layer == ', this.imageInfo.curLayer)
             this.imageInfo.countTileW = Math.ceil((this.imageInfo.width/2**this.imageInfo.curLayer)/256);
             this.imageInfo.countTileH = Math.ceil((this.imageInfo.height/2**this.imageInfo.curLayer)/256);
-            console.log(this.imageInfo.countTileW, this.imageInfo.countTileH)
         },
 
         dXdY(start, xy, point){
@@ -541,7 +542,6 @@ export default{
         },
         mouseUp(event){
             if (event.button === 0){    
-                console.log(this.imageInfo)
                 if (this.curShape.pointIndex == -1){
                     if (this.curTool === 'polygon'){
                         let tile = this.getTile(event)
@@ -552,6 +552,50 @@ export default{
                     }
                 }
             }
+        },
+        onKeyDown(event){
+            if (event.key === 'Enter'){
+                if (this.curShape.points.length>2 || (this.curShape.points.length === 1 && this.curTool === 'point')){
+                    // if (curMode == 'edit')
+                    // {
+                    //     changeMaskPoint();
+                    // }
+                    // else{sendInfo();}
+                    this.sendInfo()
+                    
+                }
+            }
+        },
+        sendInfo(){
+            let url = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+ this.$route.params.id +'/masks/create'
+            if (this.curShape.object){
+                this.curShape.object.remove();
+                this.curShape.object = null;
+                if(this.curShape.group){
+                    this.curShape.group.remove();
+                    this.curShape.group = null;
+                }  
+            }
+
+            let info = {
+                "id": 200,  //скорее всего потом нужно будет удалить
+                "project_name": this.imageInfo.projectName,
+                "task_id": Number(this.imageInfo.taskId),
+                "type": "string",
+                "class_code": 0,
+                "points": this.curShape.points
+                }
+            
+            for(let i=0; i<info.points.length; i++){
+                info.points[i] = [Math.trunc(info.points[i][0]*Math.pow(2,this.imageInfo.curLayer)), Math.trunc(info.points[i][1]*Math.pow(2,this.imageInfo.curLayer))]
+            }
+
+            let handler = (response)=>{
+               console.log('res - ', response)
+               this.curShape.points = []
+            }
+            info.points = info.points.join('|') 
+            axios.post(url, info).then(handler)
         }
     },
     components:{TileNet}
