@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from random import randint
 
 from app.models.mask import Mask
 from app.schemas.mask import MaskBase
@@ -8,7 +9,7 @@ class CRUDMask():
         return db.query(Mask).filter(Mask.project_name == project_name).filter(Mask.task_id == task_id).all()
 
     def create(self, db:Session, mask_in:MaskBase)->Mask:
-        db_mask = Mask(id=mask_in.id,
+        db_mask = Mask(id=randint(0,2147483647),
                         project_name=mask_in.project_name,
                         task_id=mask_in.task_id,
                         type=mask_in.type,
