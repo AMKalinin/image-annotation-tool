@@ -42,8 +42,15 @@ export default{
             }
         }
     },
+    props:{
+        masks:{
+            type: Array,
+            required: true
+        }
+    },
     mounted() {
         this.getImageInfo()
+        
     },
     created() {
         document.addEventListener('keydown', this.onKeyDown);
@@ -127,6 +134,7 @@ export default{
         },
 
         addRow(flag){
+            console.log(this.masks)
             let tileNet = document.getElementById('tileNet')
             let imgList = tileNet.getElementsByTagName('img')
 

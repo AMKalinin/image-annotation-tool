@@ -11,11 +11,12 @@ import MaskItem from '@/components/MaskItem.vue';
 
 export default{
     components:{MaskItem},
-    data(){
-        return{
-            masks:[{id:1},{id:2},{id:3}]
+    props:{
+        masks:{
+            type: Array,
+            required: true
         }
-    }
+    },
 }
 </script>
 

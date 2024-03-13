@@ -1,12 +1,12 @@
 <template>
     <div class="maska">
-        <div class="colorImg" :style="'background:' + mask.color + ';'"></div>
+        <div class="colorImg" :style="'background:' + ';'"></div>
 
         <div class="contentMask">
-            <label class="maskName">Name: {{mask.name}}</label> <br>
+            <label class="maskName">Name: mask.id</label> <br>
             
             <label class="check" ondblclick="event.stopPropagation();">
-                <input value="{{mask.points}};{{mask.color}}" type="checkbox" class="maskaViewCheck">
+                <input value="{{mask.points}}" type="checkbox" class="maskaViewCheck">
                 <span class="checkbox"></span>
             </label>
 
@@ -18,42 +18,38 @@
                 ondblclick="event.stopPropagation();"
             >
 
-            <label class="type">Type: {{ mask.type }} </label> <br>
+            <label class="type">Type: mask.type </label> <br>
             <label v-if="typeMask === 0">Class:   
                 <select class="selectClass">
                     <option
-                        v-if="mask.classCode == '000'"
-                        value='{{project_name}};{{task_index}};{{mask.name}};{{mask.class_code}};{{mask.color}}'
+                        v-if="mask.class_code == '000'"
                         >
                             Класс не выбран
                     </option>
                     <option
-                        v-if="mask.classCode != '000'"
-                        value='{{project_name}};{{task_index}};{{mask.name}};{{mask.class_code}};{{mask.color}}'
+                        v-if="mask.class_code != '000'"
                         >
-                            {{ mask.className }}
+                            ghfghdfghdfghdfgh
                     </option>
                     <option
-                        v-if="mask.classCode != '000'"
-                        value='{{project_name}};{{task_index}};{{mask.name}};000;#c0c0c0'
+                        v-if="mask.class_code != '000'"
                         >
                             Класс не выбран
                     </option>
                     <template v-for="cls in classesList" :key="cls[0]">
                         <option 
-                            v-if="mask.classCode != cls[2]"
-                            value='{{projectName}};{{taskIndex}};{{mask.name}};{{cls[0]}};{{cls[3]}}'
+                            v-if="mask.class_code != cls[2]"
                             >
                             {{cls[0]}}
                         </option>
                     </template>
                 </select>
             </label>
-            <label v-else-if="mask.classCode == '000'">
+            <label v-else-if="mask.class_code == '000'">
                 Class: не выбран
             </label>
             <label v-else>
-                Class: {{ mask.className }}
+                Class: dfghdfghdfghdfgh
             </label>
 
         </div>
@@ -73,17 +69,15 @@ export default{
             classesList:[['100','200','300'],
                         ['200','200','300'],
                         ['300','200','303'],
-                        ['400','200','300']],
-            mask:{
-                color:'#c0c0c0',
-                name:'123',
-                points:[1,2,3],
-                type:'rect',
-                classCode: '100',
-                className: 'asddsa'
-            }
+                        ['400','200','300']]
         }
     },
+    props:{
+        mask:{
+            type: Object,
+            required: true
+        }
+    }
 }
 </script>
 

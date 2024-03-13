@@ -1,6 +1,6 @@
 <template>
     <div class="controlEdit">
-        <mask-list/>
+        <mask-list :masks="masks"/>
     </div>
 </template>
 
@@ -8,7 +8,13 @@
 import MaskList from '@/components/MaskList.vue';
 
 export default{
-    components:{MaskList}
+    components:{MaskList},
+    props:{
+        masks:{
+            type: Array,
+            required: true
+        }
+    },
 }
 </script>
 

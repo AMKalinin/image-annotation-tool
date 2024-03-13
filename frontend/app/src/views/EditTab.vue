@@ -1,18 +1,29 @@
 <template>
     <div class="workarea">
         <Tool-Bar class="tool"></Tool-Bar>
-        <View-Edit class="edit"></View-Edit>
-        <control-edit></control-edit>
+        <View-Edit class="edit" :masks="masks"></View-Edit>
+        <control-edit :masks="masks"></control-edit>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import ToolBar from '@/components/ToolBar.vue'
 import ViewEdit from '@/components/ViewEdit.vue'
 import ControlEdit from '@/components/ControlEdit.vue'
 
 export default{
-    components:{ToolBar, ViewEdit, ControlEdit}
+    components:{ToolBar, ViewEdit, ControlEdit},
+    data(){
+        return{
+            masks: []
+        }
+    },
+    mounted(){
+        axios.get('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks').then((response) => {
+            this.masks = response.data
+        })
+    },
 }
 </script>
 
