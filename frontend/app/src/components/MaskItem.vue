@@ -3,7 +3,7 @@
         <div class="colorImg" :style="'background:' + ';'"></div>
 
         <div class="contentMask">
-            <label class="maskName">Name: mask.id</label> <br>
+            <label class="maskName">Name: {{mask.id}}</label> <br>
             
             <label class="check" ondblclick="event.stopPropagation();">
                 <input value="{{mask.points}}" type="checkbox" class="maskaViewCheck">
@@ -18,7 +18,7 @@
                 ondblclick="event.stopPropagation();"
             >
 
-            <label class="type">Type: mask.type </label> <br>
+            <label class="type">Type: {{mask.type}} </label> <br>
             <label v-if="typeMask === 0">Class:   
                 <select class="selectClass">
                     <option

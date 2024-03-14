@@ -1,7 +1,7 @@
 <template>
     <div class="maskList">
         <mask-item 
-            v-for="mask in masks" :key="mask.id"
+            v-for="mask in masks" :key="mask.id" :mask="mask"
         />
     </div>
 </template>
