@@ -9,10 +9,11 @@
             </button>
             <button id="createBased">Create project based on</button>
         </div>
-        <project-list/>
+        <project-list :projects="projects"/>
         <create-project-dialog
             v-show="isModalVisible"
             @close="closeModal"
+            @addProject="addProject"
         />
     </div>
 </template>
@@ -20,13 +21,20 @@
 <script>
 import ProjectList from '@/components/ProjectList.vue';
 import CreateProjectDialog from '@/components/CreateProjectDialog.vue';
+import axios from 'axios'
 
 export default{
     components:{ProjectList, CreateProjectDialog},
     data() {
       return {
         isModalVisible: false,
+        projects: []
       };
+    },
+    mounted(){
+      axios.get('/projects').then((response) => {
+        this.projects = response.data
+      })
     },
     methods: {
       showModal() {
@@ -34,6 +42,9 @@ export default{
       },
       closeModal() {
         this.isModalVisible = false;
+      },
+      addProject(projectInfo){
+        this.projects.push(projectInfo)
       }
     }
 }

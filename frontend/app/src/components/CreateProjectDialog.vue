@@ -57,7 +57,7 @@
                         @input="description=$event.target.value"
                     ></textarea>
                 </p>
-                
+
                 <p>
                     Load file
                     <input 
@@ -101,26 +101,30 @@ export default {
     },
   methods: {
     close(){
-        this.$emit('close');
+        this.$emit('close')
     },
     previewFiles(event){
-        this.inputFiles = event.target.files;
+        this.inputFiles = event.target.files
     },
     send(){
         const config = { headers: { 'Content-Type': 'multipart/form-data' } };
         let url = '/projects/create'
         const formData = new FormData()
-        // for( var i = 0; i < this.inputFiles.length; i++ ){
-        //     let file = this.inputFiles[i];
 
-        //     formData.append('files[' + i + ']', file);
-        // }
+        for( var i = 0; i < this.inputFiles.length; i++ ){
+            let file = this.inputFiles[i];
+
+            formData.append('files', file);
+        }
+
         formData.append('project_name', this.nameProject)
         formData.append('status', this.status)
         formData.append('creator', this.creator)
         formData.append('description', this.description)
-        formData.append('files', this.inputFiles)
-        axios.post(url, formData, config)
+        axios.post(url, formData, config).then((response)=>{
+          this.close()
+          this.$emit('addProject', response.data)
+        })
     }   
   },
 };

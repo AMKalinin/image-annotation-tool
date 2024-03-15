@@ -9,18 +9,13 @@
 
 <script>
 import ProjectItem from './ProjectItem.vue'
-import axios from 'axios'
 
 export default{
-    data(){
-        return{
-            projects: []
+    props:{
+        projects:{
+            type: Array,
+            required: true
         }
-    },
-    mounted(){
-        axios.get('/projects').then((response) => {
-            this.projects = response.data
-        })
     },
     components:{ProjectItem}
 }
