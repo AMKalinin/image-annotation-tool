@@ -35,7 +35,7 @@ def init_db():
                     create_date = datetime.date.today(),
                     last_update = datetime.date.today(),
                     creator = 'i',
-                    status = status_todo.name,
+                    status_name = status_todo.name,
                     description = 'description')
             session.add(project)
 
@@ -46,7 +46,7 @@ def init_db():
                         width = 100,
                         height = 150, 
                         layers_count = 4,
-                        status = status_todo.name)
+                        status_name = status_todo.name)
             session.add(task)
 
         with session.begin():

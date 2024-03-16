@@ -14,15 +14,15 @@ def get_all_projects(db: Session = Depends(deps.get_db)) -> Any:
 
 @router.post('/create', response_model=ProjectBase)
 def create_project(*, db: Session = Depends(deps.get_db),
-                    files:list[UploadFile], 
+                    # files:list[UploadFile],
                     project_name: Annotated[str, Form()],
                     creator: Annotated[str, Form()],
-                    status: Annotated[str, Form()],
+                    status_name: Annotated[str, Form()],
                     description: Annotated[str, Form()]) -> Any:
-    
+    files = []
     project = crud.project.create(db, ProjectBase(name=project_name,
                                                   creator=creator,
-                                                  status=status,
+                                                  status_name=status_name,
                                                   description=description), files)
     return project
 

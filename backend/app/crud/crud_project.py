@@ -2,6 +2,7 @@ from fastapi import UploadFile
 from sqlalchemy.orm import Session
 
 from app.models.project import Project
+from app.models.status import Status  #it is necessary for the relationship
 from app.schemas.project import ProjectBase
 from app.utils.project import ProjectWorker
 
@@ -20,7 +21,7 @@ class CRUDProject():
                              create_date = project_in.create_date,
                              last_update = project_in.last_update,
                              creator = project_in.creator,
-                             status = project_in.status,
+                             status_name = 'to_do',                 # убрать подобные штуки
                              description = project_in.description)
         db.add(db_project)
         db.commit()

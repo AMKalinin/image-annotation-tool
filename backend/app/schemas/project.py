@@ -7,5 +7,5 @@ class ProjectBase(BaseModel):
     create_date: datetime.date = datetime.date.today()
     last_update: datetime.date = datetime.date.today()
     creator: str
-    status: str
+    status_name: str
     description: str | None
