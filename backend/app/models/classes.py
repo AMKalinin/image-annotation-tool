@@ -4,7 +4,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base
 
-class Group(Base):
+class Classes(Base):
     code: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     name: Mapped[str] = mapped_column(nullable=False)
     project_name: Mapped[str] = mapped_column( ForeignKey('project.name'), nullable=False)

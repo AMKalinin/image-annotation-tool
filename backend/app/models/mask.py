@@ -9,10 +9,10 @@ class Mask(Base):
     project_name: Mapped[str] = mapped_column(primary_key=True)
     task_id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[str] = mapped_column()
-    group_code: Mapped[int] = mapped_column(ForeignKey('group.code'), nullable=False)
+    class_code: Mapped[int] = mapped_column(ForeignKey('classes.code'), nullable=False)
     points: Mapped[str] = mapped_column()
 
-    group = relationship("Group")
+    classes = relationship("Classes")
 
     __table_args__ = (
         ForeignKeyConstraint(
