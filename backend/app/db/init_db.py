@@ -8,6 +8,7 @@ from app.models.project import Project
 from app.models.task import Task
 from app.models.mask import Mask
 from app.models.status import Status
+from app.models.group import Group 
 
 def init_db():
     Base.metadata.create_all(engine)
@@ -50,19 +51,25 @@ def init_db():
             session.add(task)
 
         with session.begin():
+            group = Group(name='build',
+                          project_name=project.name,
+                          description='xnj nj yfgbcfyh')
+            session.add(group)
+
+        with session.begin():
             mask = Mask(id=1,
                         project_name = task.project_name,
                         task_id = task.id,
                         type = 'test',
-                        class_code = 110,
+                        group_code = group.code,
                         points='12 3,14 5')
             session.add(mask)
 
-        with session.begin():
-            session.delete(mask)
+        # with session.begin():
+        #     session.delete(mask)
 
-        with session.begin():
-            session.delete(task)
+        # with session.begin():
+        #     session.delete(task)
             
-        with session.begin():
-            session.delete(project)
+        # with session.begin():
+        #     session.delete(project)
