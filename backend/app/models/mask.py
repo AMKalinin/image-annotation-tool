@@ -5,7 +5,7 @@ from app.db.base_class import Base
 
 
 class Mask(Base):
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     project_name: Mapped[str] = mapped_column(primary_key=True)
     task_id: Mapped[int] = mapped_column(primary_key=True)
     type: Mapped[str] = mapped_column()

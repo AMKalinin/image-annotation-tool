@@ -57,19 +57,21 @@ def init_db():
             session.add(group)
 
         with session.begin():
-            mask = Mask(id=1,
-                        project_name = task.project_name,
+            mask = Mask(project_name = task.project_name,
                         task_id = task.id,
                         type = 'test',
                         group_code = group.code,
                         points='12 3,14 5')
             session.add(mask)
 
-        # with session.begin():
-        #     session.delete(mask)
+        with session.begin():
+            session.delete(mask)
 
-        # with session.begin():
-        #     session.delete(task)
+        with session.begin():
+            session.delete(task)
+
+        with session.begin():
+            session.delete(group)
             
-        # with session.begin():
-        #     session.delete(project)
+        with session.begin():
+            session.delete(project)
