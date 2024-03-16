@@ -27,35 +27,35 @@ class ProjectWorker():
         path = f'projects/{self.project_name}.hdf'
         return path
 
-    def create_project(self,db:Session, images:list[UploadFile]) -> None:
-        with h5py.File(self.project_path, 'w-') as hdf:
-            self.add_tasks(db, hdf, images)
+    def create_project(self) -> None:
+        h5py.File(self.project_path, 'w-')
 
-    def add_tasks(self,db, hdf:h5py.File, images:list[UploadFile]):
-        for index, image in enumerate(images):
-            self.add_task(db, hdf, image, index)
+    def add_tasks(self, images:list[UploadFile])->dict[int, tuple[int, int, int]]:
+        with h5py.File(self.project_path, 'w') as hdf:
+            img_info_dict={}
+            for index, image in enumerate(images):
+                img_info_dict[index]= (self.add_task(hdf, image, index))
+        return img_info_dict
 
-    def add_task(self,db:Session, hdf:h5py.File, image:UploadFile, index:int):
+    def add_task(self, hdf:h5py.File, image:UploadFile, index:int):
         img = Image.open(image.file)
         task_folder = hdf.create_group(str(index))
         count_layers = self.get_count_layers(img.size[0], img.size[1])
-        task = TaskBase(id=index,
-                        project_name=self.project_name,
-                        file_name=image.filename,
-                        width=img.size[0],
-                        height=img.size[1],
-                        layers_count=count_layers,
-                        status_name='to_do')                 # убрать подобные штуки
-        self.add_task_db(db, task_in=task)  
+        # task = TaskBase(id=index,
+        #                 project_name=self.project_name,
+        #                 file_name=image.filename,
+        #                 width=img.size[0],
+        #                 height=img.size[1],
+        #                 layers_count=count_layers,
+        #                 status_name='to_do')                 # убрать подобные штуки
+        # self.add_task_db(db, task_in=task)  
         
         for i in range(count_layers):
             self.create_layer(task_folder, i, img)
 
         img_icon = img.resize((100,100))
-        task_folder.create_dataset('img_icon', data=np.asarray(img_icon, dtype='uint8'))  
-
-    def add_task_db(self, db:Session, task_in:TaskBase):
-        crud.task.create(db, task_in)
+        task_folder.create_dataset('img_icon', data=np.asarray(img_icon, dtype='uint8'))
+        return  count_layers, img.size[0], img.size[1]   # layers, width, height 
 
     def get_count_layers(self, w:int, h:int) -> int:
         col_layer = 0

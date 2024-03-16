@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi import UploadFile
 
 from app.models.task import Task
 from app.schemas.task import TaskBase
@@ -9,15 +10,30 @@ class CRUDTask():
     def get_all(self, db:Session, project_name:str) -> list[Task]:
         return db.query(Task).filter(Task.project_name == project_name).all()
 
-    def create(self, db:Session, task_in:TaskBase)->Task:
-        db_task = Task(id=task_in.id,
-                        project_name=task_in.project_name,
-                        file_name=task_in.file_name,
-                        width=task_in.width,
-                        height=task_in.height,
-                        layers_count=task_in.layers_count,
-                        status_name=task_in.status_name)
-        db.add(db_task)
+    def create_tasks(self, db:Session, project_name:str, images:list[UploadFile])->Task:
+        img_info_dict = self.create_file(project_name, images)
+        db_tasks = self.create_db(db, project_name, images, img_info_dict)
+        return db_tasks
+
+    def create_file(self, project_name:str, images:list[UploadFile])->dict:
+        prj_worker = ProjectWorker(project_name)
+        img_info_dict = prj_worker.add_tasks(images)
+        return img_info_dict
+
+    def create_db(self, db:Session, 
+                  project_name:str,
+                  images:list[UploadFile],
+                  img_info_dict:list[int]):
+        
+        for index, image in enumerate(images):
+            db_task = Task(id=index,
+                            project_name=project_name,
+                            file_name=image.filename,
+                            width=img_info_dict[index][1],
+                            height=img_info_dict[index][2],
+                            layers_count=img_info_dict[index][0],
+                            status_name='to_do')
+            db.add(db_task)
         db.commit()
         db.refresh(db_task)
         return db_task

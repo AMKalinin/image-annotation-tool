@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app.models.project import Project
 from app.models.status import Status  #it is necessary for the relationship
+from app.models.classes import Classes  #it is necessary for the relationship
 from app.schemas.project import ProjectBase
 from app.utils.project import ProjectWorker
 
@@ -11,9 +12,9 @@ class CRUDProject():
     def get_all(self, db:Session)->list[Project]:
         return db.query(Project).all()
 
-    def create(self, db:Session, project_in:ProjectBase, files:list[UploadFile]) -> Project:
+    def create(self, db:Session, project_in:ProjectBase) -> Project:
         db_project = self.create_db(db, project_in)
-        self.create_file(db, project_in, files)
+        self.create_file(project_in)
         return db_project
     
     def create_db(self,db:Session, project_in:ProjectBase)->Project:
@@ -28,9 +29,9 @@ class CRUDProject():
         db.refresh(db_project)
         return db_project
 
-    def create_file(self,db:Session, project_in:ProjectBase, files:list[UploadFile]) -> None:
+    def create_file(self, project_in:ProjectBase) -> None:
             prj_worker = ProjectWorker(project_in.name)
-            prj_worker.create_project(db, files)
+            prj_worker.create_project()
     
     def get_by_name(self, db:Session, name:str) -> Project:
         return db.query(Project).filter(Project.name == name).first()

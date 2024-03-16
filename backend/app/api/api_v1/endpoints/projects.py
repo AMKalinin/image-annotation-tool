@@ -1,7 +1,8 @@
 from typing import Any, Annotated
 from fastapi import APIRouter, Depends, UploadFile, Form
 
-from app.schemas.project import ProjectBase
+from app.schemas.project import ProjectBase, ProjectIn
+from app.schemas.classes import ClassesBase
 from sqlalchemy.orm import Session
 from app.api import deps
 from app import crud
@@ -17,12 +18,11 @@ def create_project(*, db: Session = Depends(deps.get_db),
                     files:list[UploadFile],
                     project_name: Annotated[str, Form()],
                     creator: Annotated[str, Form()],
-                    status_name: Annotated[str, Form()],
                     description: Annotated[str, Form()]) -> Any:
-    project = crud.project.create(db, ProjectBase(name=project_name,
+    project = crud.project.create(db, ProjectIn(name=project_name,
                                                   creator=creator,
-                                                  status_name=status_name,
-                                                  description=description), files)
+                                                  description=description))
+    crud.task.create_tasks(db, project_name, files)
     return project
 
 @router.post('/create-based', response_model=ProjectBase)
