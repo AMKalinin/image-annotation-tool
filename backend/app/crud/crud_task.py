@@ -16,7 +16,7 @@ class CRUDTask():
                         width=task_in.width,
                         height=task_in.height,
                         layers_count=task_in.layers_count,
-                        status=task_in.status)
+                        status_name=task_in.status_name)
         db.add(db_task)
         db.commit()
         db.refresh(db_task)

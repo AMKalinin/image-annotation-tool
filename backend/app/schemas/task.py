@@ -8,4 +8,4 @@ class TaskBase(BaseModel):
     width: int
     height: int
     layers_count: int = 1
-    status: str 
+    status_name: str 

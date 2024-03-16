@@ -1,6 +1,5 @@
-from sqlalchemy import ForeignKeyConstraint
 from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base_class import Base
 
@@ -11,13 +10,6 @@ class Task(Base):
     width: Mapped[int] = mapped_column()
     height: Mapped[int] = mapped_column()
     layers_count: Mapped[int] = mapped_column()
-    status: Mapped[str] = mapped_column(ForeignKey('status.name'))
+    status_name: Mapped[str] = mapped_column(ForeignKey('status.name'))
 
-    __table_args__ = (
-        ForeignKeyConstraint(
-            ['status'],
-            ['status.name']
-        ),
-    )
-
-    
+    status = relationship("Status")

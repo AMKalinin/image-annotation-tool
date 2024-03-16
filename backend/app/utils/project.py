@@ -10,6 +10,7 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = 933120000
 
 from app import crud
+from app.models.status import Status
 from app.schemas.task import TaskBase
 
 
@@ -44,7 +45,7 @@ class ProjectWorker():
                         width=img.size[0],
                         height=img.size[1],
                         layers_count=count_layers,
-                        status='OK')
+                        status_name='to_do')                 # убрать подобные штуки
         self.add_task_db(db, task_in=task)  
         
         for i in range(count_layers):
