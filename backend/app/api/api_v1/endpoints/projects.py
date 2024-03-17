@@ -1,4 +1,4 @@
-from typing import Any, Annotated
+from typing import Any, Annotated, List
 from fastapi import APIRouter, Depends, UploadFile, Form
 
 from app.schemas.project import ProjectBase, ProjectIn
@@ -15,14 +15,16 @@ def get_all_projects(db: Session = Depends(deps.get_db)) -> Any:
 
 @router.post('/create', response_model=ProjectBase)
 def create_project(*, db: Session = Depends(deps.get_db),
-                    files:list[UploadFile],
+                    files: List[UploadFile],
                     project_name: Annotated[str, Form()],
                     creator: Annotated[str, Form()],
-                    description: Annotated[str, Form()]) -> Any:
+                    description: Annotated[str, Form()],
+                    classes: List[ClassesBase]) -> Any:
     project = crud.project.create(db, ProjectIn(name=project_name,
                                                   creator=creator,
                                                   description=description))
     crud.task.create_tasks(db, project_name, files)
+    crud.classes.create_classes(db, project_name, classes)
     return project
 
 @router.post('/create-based', response_model=ProjectBase)
