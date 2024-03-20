@@ -12,24 +12,26 @@ from app.models.classes import Classes
 
 def init_db():
     Base.metadata.create_all(engine)
-    
+
     with Session(engine) as session:
         with session.begin():
-            status_todo = Status(name = 'to_do',
-                            description = 'Project/task created')
-            
-            status_inprogress = Status(name = 'in_progress',
-                            description = 'Project/task in progress')
-            
-            status_tocheck = Status(name = 'to_check',
-                            description = 'Project/task wait check')
-            
-            status_done = Status(name = 'done',
-                            description = 'Project/task done')
-            session.add(status_todo)
-            session.add(status_inprogress)
-            session.add(status_tocheck)
-            session.add(status_done)
+            status_todo = session.query(Status).filter(Status.name == 'to_do').first()
+            if not status_todo:
+                status_todo = Status(name = 'to_do',
+                                description = 'Project/task created')
+                
+                status_inprogress = Status(name = 'in_progress',
+                                description = 'Project/task in progress')
+                
+                status_tocheck = Status(name = 'to_check',
+                                description = 'Project/task wait check')
+                
+                status_done = Status(name = 'done',
+                                description = 'Project/task done')
+                session.add(status_todo)
+                session.add(status_inprogress)
+                session.add(status_tocheck)
+                session.add(status_done)
 
         with session.begin():
             project = Project(name = 'asddas',
@@ -52,8 +54,9 @@ def init_db():
 
         with session.begin():
             classes = Classes(name='build',
-                          project_name=project.name,
-                          description='xnj nj yfgbcfyh')
+                            color_code='#FFFFFF',
+                            project_name=project.name,
+                            description='xnj nj yfgbcfyh')
             session.add(classes)
 
         with session.begin():

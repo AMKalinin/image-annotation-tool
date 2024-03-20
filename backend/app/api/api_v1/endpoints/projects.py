@@ -2,7 +2,7 @@ from typing import Any, Annotated, List
 from fastapi import APIRouter, Depends, UploadFile, Form
 
 from app.schemas.project import ProjectBase, ProjectIn
-from app.schemas.classes import ClassesBase
+from app.schemas.classes import ClassesLst
 from sqlalchemy.orm import Session
 from app.api import deps
 from app import crud
@@ -19,12 +19,12 @@ def create_project(*, db: Session = Depends(deps.get_db),
                     project_name: Annotated[str, Form()],
                     creator: Annotated[str, Form()],
                     description: Annotated[str, Form()],
-                    classes: List[ClassesBase]) -> Any:
+                    classes: ClassesLst) -> Any:
     project = crud.project.create(db, ProjectIn(name=project_name,
                                                   creator=creator,
                                                   description=description))
     crud.task.create_tasks(db, project_name, files)
-    crud.classes.create_classes(db, project_name, classes)
+    crud.classes.create_classes(db, project_name, classes.classes_list)
     return project
 
 @router.post('/create-based', response_model=ProjectBase)
