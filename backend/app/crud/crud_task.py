@@ -4,6 +4,7 @@ from fastapi import UploadFile
 from app.models.task import Task
 from app.schemas.task import TaskBase
 from app.utils.project import ProjectWorker
+from app.core.const import STATUS_NAME_CREATE
 
 class CRUDTask():
 
@@ -32,7 +33,7 @@ class CRUDTask():
                             width=img_info_dict[index][1],
                             height=img_info_dict[index][2],
                             layers_count=img_info_dict[index][0],
-                            status_name='to_do')
+                            status_name=STATUS_NAME_CREATE)
             db.add(db_task)
         db.commit()
         db.refresh(db_task)

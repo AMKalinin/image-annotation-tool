@@ -6,7 +6,7 @@ from app.models.status import Status  #it is necessary for the relationship
 from app.models.classes import Classes  #it is necessary for the relationship
 from app.schemas.project import ProjectBase
 from app.utils.project import ProjectWorker
-
+from app.core.const import STATUS_NAME_CREATE
 class CRUDProject():
 
     def get_all(self, db:Session)->list[Project]:
@@ -22,7 +22,7 @@ class CRUDProject():
                              create_date = project_in.create_date,
                              last_update = project_in.last_update,
                              creator = project_in.creator,
-                             status_name = 'to_do',                 # убрать подобные штуки
+                             status_name = STATUS_NAME_CREATE,
                              description = project_in.description)
         db.add(db_project)
         db.commit()

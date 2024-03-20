@@ -1,0 +1,6 @@
+
+
+STATUS_NAME_CREATE = 'to_do'
+STATUS_NAME_IN_WORK = 'in_work'
+STATUS_NAME_TO_CHECK = 'to_check'
+STATUS_NAME_DONE = 'done'
