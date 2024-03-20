@@ -2,10 +2,10 @@ from pydantic import BaseModel
 import datetime
 
 
-class ProjectBase(BaseModel):
+class ProjectOut(BaseModel):
     name: str
-    create_date: datetime.date = datetime.date.today()
-    last_update: datetime.date = datetime.date.today()
+    create_date: datetime.date
+    last_update: datetime.date
     creator: str
     status_name: str
     description: str | None
