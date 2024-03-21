@@ -19,7 +19,7 @@ def create_project(*, db: Session = Depends(deps.get_db),
                     project_name: Annotated[str, Form()],
                     creator: Annotated[str, Form()],
                     description: Annotated[str, Form()],
-                    classes: ClassesLst) -> Any:
+                    classes: Annotated[ClassesLst, Form()]) -> Any:   # Может быть будет работать и без этого, надо проверить потом
     project = crud.project.create(db, ProjectIn(name=project_name,
                                                   creator=creator,
                                                   description=description))

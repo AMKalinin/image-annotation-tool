@@ -37,17 +37,6 @@
                     >
                 </p>
 
-                <p>
-                    Status
-                    <input 
-                        class="inputName" 
-                        type="text" 
-                        name="status" 
-                        :value=status 
-                        @input="status=$event.target.value"
-                    >
-                </p>
-
                 <p class="description">
                     Description
                     <textarea 
@@ -55,6 +44,15 @@
                         name="description" 
                         :value=description 
                         @input="description=$event.target.value"
+                    ></textarea>
+                </p>
+                <p>
+                    Classes
+                    <textarea 
+                        class="inputClasses" 
+                        name="classes"  
+                        :value=classes 
+                        @input="classes=$event.target.value"
                     ></textarea>
                 </p>
 
@@ -94,8 +92,17 @@ export default {
         return{
             nameProject:'',
             creator:'I am',
-            status:'OK',
             description:'',
+            classes:
+'{\
+  "classes_list": [\
+    {\
+      "color_code": "string",\
+      "name": "string",\
+      "description": "string"\
+    }\
+  ]\
+}',
             inputFiles:[],
         }
     },
@@ -118,9 +125,9 @@ export default {
         }
 
         formData.append('project_name', this.nameProject)
-        formData.append('status', this.status)
         formData.append('creator', this.creator)
         formData.append('description', this.description)
+        formData.append('classes', this.classes)
         axios.post(url, formData, config).then((response)=>{
           this.close()
           this.$emit('addProject', response.data)
