@@ -7,7 +7,7 @@ from app.schemas.classes import ClassesBase
 class CRUDClasses():
 
     def get_all(self, db:Session, project_name:str) -> list[Classes]:
-        return db.query(Classes).filter(Classes.project_name == project_name)
+        return db.query(Classes).filter(Classes.project_name == project_name).all()
     
     def create_classes(self, db:Session, project_name:str, classes:list[ClassesBase])->None:
         for cls in classes:
