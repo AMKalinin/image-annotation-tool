@@ -3,7 +3,7 @@
         <img class="imgTask" :src="'http://192.168.0.20:8001/api/v1/projects/'+task.project_name+'/tasks/'+task.id+'/icon'">
         <div>
             ID: {{task.id}}<br>
-            <div v-if="task.status == 'OK'">
+            <div v-if="task.status_name == 'to_do'">
                 <button class="btnEdit" @click="$router.push({ path: `/edit/${task.project_name}/${task.id}`})">Edit</button><br>
             </div>
             <div v-else>

@@ -2,7 +2,7 @@
     <div class="workarea">
         <Tool-Bar class="tool"></Tool-Bar>
         <View-Edit class="edit" :masks="masks"></View-Edit>
-        <control-edit :masks="masks"></control-edit>
+        <control-edit :masks="masks" :classList="classList"></control-edit>
     </div>
 </template>
 
@@ -16,12 +16,17 @@ export default{
     components:{ToolBar, ViewEdit, ControlEdit},
     data(){
         return{
-            masks: []
+            masks: [],
+            classList: []
         }
     },
     mounted(){
         axios.get('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks').then((response) => {
             this.masks = response.data
+        })
+        axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
+            console.log(response.data)
+            this.classList = response.data
         })
     },
 }

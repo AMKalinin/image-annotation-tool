@@ -76,6 +76,10 @@ export default{
         mask:{
             type: Object,
             required: true
+        },
+        classList:{
+            type: Array,
+            required: true
         }
     }
 }

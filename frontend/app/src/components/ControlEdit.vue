@@ -1,6 +1,6 @@
 <template>
     <div class="controlEdit">
-        <mask-list :masks="masks"/>
+        <mask-list :masks="masks" :classList="classList"/>
     </div>
 </template>
 
@@ -11,6 +11,10 @@ export default{
     components:{MaskList},
     props:{
         masks:{
+            type: Array,
+            required: true
+        },
+        classList:{
             type: Array,
             required: true
         }

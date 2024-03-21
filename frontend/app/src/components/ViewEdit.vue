@@ -134,7 +134,6 @@ export default{
         },
 
         addRow(flag){
-            console.log(this.masks)
             let tileNet = document.getElementById('tileNet')
             let imgList = tileNet.getElementsByTagName('img')
 
@@ -586,11 +585,10 @@ export default{
             }
 
             let info = {
-                "id": 200,  //скорее всего потом нужно будет удалить
                 "project_name": this.imageInfo.projectName,
                 "task_id": Number(this.imageInfo.taskId),
-                "type": "string",
-                "class_code": 0,
+                "type": "polygon",  //Поменять когда добавятся разные классы
+                "class_code": 3,
                 "points": this.curShape.points
                 }
             
@@ -598,8 +596,7 @@ export default{
                 info.points[i] = [Math.trunc(info.points[i][0]*Math.pow(2,this.imageInfo.curLayer)), Math.trunc(info.points[i][1]*Math.pow(2,this.imageInfo.curLayer))]
             }
 
-            let handler = (response)=>{
-               console.log('res - ', response)
+            let handler = ()=>{
                this.curShape.points = []
             }
             info.points = info.points.join('|') 

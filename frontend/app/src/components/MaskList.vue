@@ -1,7 +1,7 @@
 <template>
     <div class="maskList">
         <mask-item 
-            v-for="mask in masks" :key="mask.id" :mask="mask"
+            v-for="mask in masks" :key="mask.id" :mask="mask" :classList="classList"
         />
     </div>
 </template>
@@ -13,6 +13,10 @@ export default{
     components:{MaskItem},
     props:{
         masks:{
+            type: Array,
+            required: true
+        },
+        classList:{
             type: Array,
             required: true
         }
