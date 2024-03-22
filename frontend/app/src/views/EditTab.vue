@@ -25,7 +25,6 @@ export default{
             this.masks = response.data
         })
         axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
-            console.log(response.data)
             this.classList = response.data
         })
     },

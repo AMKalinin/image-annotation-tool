@@ -21,30 +21,23 @@
             <label class="type">Type: {{mask.type}} </label> <br>
             <label v-if="typeMask === 0">Class:   
                 <select class="selectClass">
-                    <option
-                        v-if="mask.class_code == '000'"
-                        >
-                            Класс не выбран
-                    </option>
-                    <option
-                        v-if="mask.class_code != '000'"
-                        >
-                            ghfghdfghdfghdfgh
-                    </option>
-                    <option
-                        v-if="mask.class_code != '000'"
-                        >
-                            Класс не выбран
-                    </option>
-                    <template v-for="cls in classesList" :key="cls[0]">
+                    <template v-for="cls in classList" :key="cls.code">
                         <option 
-                            v-if="mask.class_code != cls[2]"
+                            v-if="mask.class_code == cls.code"
                             >
-                            {{cls[0]}}
+                            {{cls.name}}
+                        </option>
+                    </template>
+                    <template v-for="cls in classList" :key="cls.code">
+                        <option 
+                            v-if="mask.class_code != cls.code"
+                            >
+                            {{cls.name}}
                         </option>
                     </template>
                 </select>
             </label>
+            <!-- Тут возможно надо будет переделать  -->
             <label v-else-if="mask.class_code == '000'">
                 Class: не выбран
             </label>
@@ -65,11 +58,7 @@ export default{
             projectName: 'asd',
             taskIndex: 0,
             imageTrash,
-            typeMask:0,
-            classesList:[['100','200','300'],
-                        ['200','200','300'],
-                        ['300','200','303'],
-                        ['400','200','300']]
+            typeMask:0
         }
     },
     props:{
