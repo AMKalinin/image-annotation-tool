@@ -117,7 +117,7 @@ export default{
             img.width = 256
             img.height = 256
 
-            let avv = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
+            let avv = process.env.VUE_APP_BASE_URL+'/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/layer/'+str_id[2]+'/tile/'+str_id[0]+':'+str_id[1]
 
             //проверить на нужность
             img.onload = function() {   
@@ -574,7 +574,7 @@ export default{
             }
         },
         sendInfo(){
-            let url = 'http://localhost:8001/api/v1/projects/'+this.$route.params.projectName+'/tasks/'+ this.$route.params.id +'/masks/create'
+            let url = process.env.VUE_APP_BASE_URL + '/projects/'+this.$route.params.projectName+'/tasks/'+ this.$route.params.id +'/masks/create'
             if (this.curShape.object){
                 this.curShape.object.remove();
                 this.curShape.object = null;

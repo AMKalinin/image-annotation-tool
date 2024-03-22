@@ -12,7 +12,7 @@
                 <img class="img_icon" src="{{url_for('general.task_icon', project_name=project.name, task_index=i)}}">
                 {% endfor %}
             {% endif %} -->
-            <img class="img_icon" :src="'http://192.168.0.20:8001/api/v1/projects/'+project.name+'/tasks/0/icon'">
+            <img class="img_icon" :src="BASE_URL+'/projects/'+project.name+'/tasks/0/icon'">
         </div>
 
         <div>
@@ -31,6 +31,11 @@
 
 <script>
 export default{
+    data() {
+      return {
+        BASE_URL:process.env.VUE_APP_BASE_URL
+      };
+    },
     props:{
         project:{
             type: Object,

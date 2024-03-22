@@ -1,6 +1,6 @@
 <template>
     <fieldset class="task" :id="task.id">
-        <img class="imgTask" :src="'http://192.168.0.20:8001/api/v1/projects/'+task.project_name+'/tasks/'+task.id+'/icon'">
+        <img class="imgTask" :src="BASE_URL+'/projects/'+task.project_name+'/tasks/'+task.id+'/icon'">
         <div>
             ID: {{task.id}}<br>
             <div v-if="task.status_name == 'to_do'">
@@ -16,6 +16,11 @@
 
 <script>
 export default{
+    data() {
+      return {
+        BASE_URL:process.env.VUE_APP_BASE_URL
+      };
+    },
     props:{
         task:{
             type: Object,
