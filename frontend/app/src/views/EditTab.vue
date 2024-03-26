@@ -23,6 +23,11 @@ export default{
     mounted(){
         axios.get('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks').then((response) => {
             this.masks = response.data
+            // TODO Нужно сделать конвертацию из строки в массив точек
+            for (let i=0; i<this.masks.length; i++){
+                this.masks[i].visibilityFlag = true
+                this.masks[i].backlightFlag = false
+            }
         })
         axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
             this.classList = response.data

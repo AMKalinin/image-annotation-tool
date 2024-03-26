@@ -56,6 +56,17 @@ export default{
         document.addEventListener('keydown', this.onKeyDown);
     },
     methods: {
+        createAllMask(){
+            let canvas = SVG('#canvas')
+            for (let i=0; i<this.masks.length; i++){
+                let points_str =  maska_list[i].getElementsByTagName('input')[0].value.split(';')[0]
+                let points = str_to_pointslist(points_str)
+                let clr = maska_list[i].getElementsByTagName('input')[0].value.split(';')[1]
+                let type = maska_list[i].getElementsByClassName('type')[0].innerHTML.split(' ')[1]
+
+                this.createMask(canvas, maska_list[i], points, clr, type, i);
+            }
+        },
         getImageInfo(){
             let tileNet = document.getElementById('tileNet')
             this.imageInfo.projectName = this.$route.params.projectName
