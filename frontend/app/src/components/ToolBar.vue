@@ -42,7 +42,6 @@ ul.toolbar
     left: 0;
     height: 100%;
     min-width: 60px;
-    max-width: 60px;
 }
 
 ul.toolbar li.tool_item {
