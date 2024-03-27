@@ -35,5 +35,7 @@ export default{
         "maskList";
     overflow: auto;
     /* height: 94vh; */
+    min-width: 300px;
+    /* max-width: 350px; */
 }
 </style>

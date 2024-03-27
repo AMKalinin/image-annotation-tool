@@ -48,6 +48,8 @@ export default{
     top: 0;
     left: 0;
     height: 100%;
+    min-height: 60px;
+    max-height: 60px;
 }
 
 .navItem {
