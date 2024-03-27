@@ -509,7 +509,6 @@ export default{
         drawPolygon(){
             let canvas = SVG('#canvas')
             if (!this.curShape.object){
-                console.log(this.curShape.points)
                 this.curShape.object = canvas.polygon(this.curShape.points).fill('none').stroke({ width: 2,  color: '#000000'});
                 this.curShape.group = canvas.group();
                 let dxdy = this.firstOffset()
@@ -578,9 +577,9 @@ export default{
             if (event.buttons === 1){
                 if (this.curTool === 'polygon' || this.curTool === 'line'){
                     if (this.curShape.pointIndex > -1){
-                    let point = this.curShape.object.point(pointWind[0], pointWind[1]);
-                    this.curShape.points[this.curShape.pointIndex] = [point.x,point.y];
-                    this.drawPolygon();
+                    let point = this.curShape.object.point(pointWind[0], pointWind[1])
+                    this.curShape.points[this.curShape.pointIndex] = [point.x,point.y]
+                    this.drawPolygon()
                     }
                 }
             }
@@ -588,9 +587,10 @@ export default{
         mouseUp(event){
             if (event.button === 0){    
                 if (this.curShape.pointIndex == -1){
+                    let tile = this.getTile(event)
+                    if(!tile){return}
+                    let point = this.getPointInImg(event, tile)
                     if (this.curTool === 'polygon'){
-                        let tile = this.getTile(event)
-                        let point = this.getPointInImg(event, tile)
                         this.curShape.points.push([point[0]/Math.pow(2,this.imageInfo.curLayer), point[1]/Math.pow(2,this.imageInfo.curLayer)])
                         this.drawPolygon()
 
