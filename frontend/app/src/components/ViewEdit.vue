@@ -44,27 +44,53 @@ export default{
     },
     props:{
         masks:{
-            type: Array,
-            required: true
+            type: Array
         }
     },
     mounted() {
         this.getImageInfo()
-        
+    },
+    updated(){
+        this.createAllMask()
     },
     created() {
-        document.addEventListener('keydown', this.onKeyDown);
+        document.addEventListener('keydown', this.onKeyDown)
     },
     methods: {
+        createMask(svg, points, clr, type, maskID){
+            let objMaska
+            let el
+            let tmpPoints = []
+            for (let i=0; i<points.length; i++){
+                tmpPoints.push([points[i][0],points[i][1]])
+            }
+            if(type==='polygon'){
+                objMaska = svg.polygon(tmpPoints)
+            }
+            objMaska.fill(clr+'55')
+                .stroke({ width: 2,  color: clr})
+                .id("shape_"+maskID)
+                .on('mouseover', ()=>{
+                    // maskControl.style.background = 'LightGrey'; нунжно будет доработать
+                    el = document.getElementById('shape_'+maskID);
+                    el.style.fill = clr+'bb';
+                    })
+                .on('mouseout', ()=>{
+                    // maskControl.style.background = 'white'; нунжно будет доработать
+                    el = document.getElementById('shape_'+maskID);
+                    el.style.fill = clr+'55';    
+                })
+                // .hide()
+        },
         createAllMask(){
             let canvas = SVG('#canvas')
             for (let i=0; i<this.masks.length; i++){
-                let points_str =  maska_list[i].getElementsByTagName('input')[0].value.split(';')[0]
-                let points = str_to_pointslist(points_str)
-                let clr = maska_list[i].getElementsByTagName('input')[0].value.split(';')[1]
-                let type = maska_list[i].getElementsByClassName('type')[0].innerHTML.split(' ')[1]
+                let points = this.masks[i].points
+                let clr = this.masks[i].color_code
+                let type = this.masks[i].type
+                let maskID = this.masks[i].id
 
-                this.createMask(canvas, maska_list[i], points, clr, type, i);
+                this.createMask(canvas, points, clr, type, maskID);
             }
         },
         getImageInfo(){
@@ -483,6 +509,7 @@ export default{
         drawPolygon(){
             let canvas = SVG('#canvas')
             if (!this.curShape.object){
+                console.log(this.curShape.points)
                 this.curShape.object = canvas.polygon(this.curShape.points).fill('none').stroke({ width: 2,  color: '#000000'});
                 this.curShape.group = canvas.group();
                 let dxdy = this.firstOffset()

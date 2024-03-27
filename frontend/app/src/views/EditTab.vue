@@ -1,7 +1,7 @@
 <template>
     <div class="workarea">
         <Tool-Bar class="tool"></Tool-Bar>
-        <View-Edit class="edit" :masks="masks"></View-Edit>
+        <View-Edit class="edit" :masks="masks" ref="childComponent"></View-Edit>
         <control-edit :masks="masks" :classList="classList"></control-edit>
     </div>
 </template>
@@ -23,16 +23,29 @@ export default{
     mounted(){
         axios.get('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks').then((response) => {
             this.masks = response.data
-            // TODO Нужно сделать конвертацию из строки в массив точек
+            // TODO Нужно сделать конвертацию из строки в массив точек СДЕЛАНО!!!!!!!!!!!!!!
             for (let i=0; i<this.masks.length; i++){
                 this.masks[i].visibilityFlag = true
                 this.masks[i].backlightFlag = false
+                this.masks[i].points = this.strToPointList(this.masks[i].points)
             }
         })
         axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
             this.classList = response.data
         })
     },
+    methods: {
+        strToPointList(pointStr){
+            let pointsNumber = []
+            let pointsList = pointStr.split('|')
+            for (let i=0; i<pointsList.length; i++){
+                let tmp = pointsList[i].split(',')
+                pointsNumber.push([Number(tmp[0]),Number(tmp[1])])
+                pointsNumber.push()
+            }
+        return pointsNumber
+        },
+    }
 }
 </script>
 
