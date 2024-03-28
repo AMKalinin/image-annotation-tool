@@ -12,7 +12,8 @@
             :masks="masks"
             :classList="classList"
             @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
-            @changeMaskBacklightFlag="changeMaskBacklightFlag">
+            @changeMaskBacklightFlag="changeMaskBacklightFlag"
+            @deleteMask="deleteMask">
         </control-edit>
     </div>
 </template>
@@ -62,6 +63,10 @@ export default{
         },
         changeMaskBacklightFlag(index){
             this.masks[index].backlightFlag = !this.masks[index].backlightFlag 
+        },
+        deleteMask(index){
+            this.masks.splice(index, 1)
+            console.log(123)
         }
     }
 }

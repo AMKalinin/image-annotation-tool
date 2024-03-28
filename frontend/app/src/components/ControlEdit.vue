@@ -5,6 +5,7 @@
             :classList="classList"
             @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
             @changeMaskBacklightFlag="changeMaskBacklightFlag"
+            @deleteMask="deleteMask"
         />
     </div>
 </template>
@@ -30,6 +31,9 @@ export default{
         },
         changeMaskBacklightFlag(index){
             this.$emit('changeMaskBacklightFlag', index)
+        },
+        deleteMask(index){
+            this.$emit('deleteMask', index)
         }
     }
 }

@@ -18,6 +18,7 @@
                 class="deleteBtn" 
                 :src="imageTrash"
                 title="Polygon" 
+                @click="deleteMask"
                 ondblclick="event.stopPropagation();"
             >
 
@@ -97,6 +98,10 @@ export default{
         },
         visibleCheck(){
             this.$emit('changeMaskVisibilityFlag', this.mask.index)
+        },
+        deleteMask(){
+            console.log(this.mask.index)
+            // this.$emit('deleteMask', this.mask.index)
         }
     }
 }
