@@ -1,8 +1,19 @@
 <template>
     <div class="workarea">
         <Tool-Bar class="tool"></Tool-Bar>
-        <View-Edit class="edit" :masks="masks" ref="childComponent"></View-Edit>
-        <control-edit :masks="masks" :classList="classList"></control-edit>
+        <View-Edit 
+            class="edit" 
+            :masks="masks" 
+            ref="childComponent"
+            @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
+            @changeMaskBacklightFlag="changeMaskBacklightFlag">
+        </View-Edit>
+        <control-edit
+            :masks="masks"
+            :classList="classList"
+            @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
+            @changeMaskBacklightFlag="changeMaskBacklightFlag">
+        </control-edit>
     </div>
 </template>
 
@@ -25,6 +36,7 @@ export default{
             this.masks = response.data
             // TODO Нужно сделать конвертацию из строки в массив точек СДЕЛАНО!!!!!!!!!!!!!!
             for (let i=0; i<this.masks.length; i++){
+                this.masks[i].index = i
                 this.masks[i].visibilityFlag = true
                 this.masks[i].backlightFlag = false
                 this.masks[i].points = this.strToPointList(this.masks[i].points)
@@ -45,6 +57,12 @@ export default{
             }
         return pointsNumber
         },
+        changeMaskVisibilityFlag(index){
+            this.masks[index].visibilityFlag = !this.masks[index].visibilityFlag 
+        },
+        changeMaskBacklightFlag(index){
+            this.masks[index].backlightFlag = !this.masks[index].backlightFlag 
+        }
     }
 }
 </script>

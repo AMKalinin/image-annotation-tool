@@ -47,6 +47,29 @@ export default{
             type: Array
         }
     },
+    watch:{
+        masks:{
+            handler(newVal){
+                for (let i=0; i<newVal.length; i++){
+                    let maskShape = document.getElementById('shape_' + newVal[i].id)
+                    if(!maskShape){return}
+                    if(newVal[i].visibilityFlag){
+                        maskShape.style.display = ''
+                        if (newVal[i].backlightFlag){
+                            maskShape.style.fill = newVal[i].color_code+'bb'
+                        }
+                        else{
+                            maskShape.style.fill = newVal[i].color_code+'55'
+                        }   
+                    }
+                    else{
+                        maskShape.style.display = 'none'
+                    }
+                }
+            },
+            deep: true
+        }
+    },
     mounted() {
         this.getImageInfo()
     },
@@ -57,9 +80,8 @@ export default{
         document.addEventListener('keydown', this.onKeyDown)
     },
     methods: {
-        createMask(svg, points, clr, type, maskID){
+        createMask(svg, points, clr, type, maskID, index){
             let objMaska
-            let el
             let tmpPoints = []
             for (let i=0; i<points.length; i++){
                 tmpPoints.push([points[i][0],points[i][1]])
@@ -70,15 +92,11 @@ export default{
             objMaska.fill(clr+'55')
                 .stroke({ width: 2,  color: clr})
                 .id("shape_"+maskID)
-                .on('mouseover', ()=>{
-                    // maskControl.style.background = 'LightGrey'; нунжно будет доработать
-                    el = document.getElementById('shape_'+maskID);
-                    el.style.fill = clr+'bb';
+                .on('mouseenter', ()=>{
+                    this.$emit('changeMaskBacklightFlag', index)
                     })
-                .on('mouseout', ()=>{
-                    // maskControl.style.background = 'white'; нунжно будет доработать
-                    el = document.getElementById('shape_'+maskID);
-                    el.style.fill = clr+'55';    
+                .on('mouseleave', ()=>{
+                    this.$emit('changeMaskBacklightFlag', index)  
                 })
                 // .hide()
         },
@@ -90,7 +108,7 @@ export default{
                 let type = this.masks[i].type
                 let maskID = this.masks[i].id
 
-                this.createMask(canvas, points, clr, type, maskID);
+                this.createMask(canvas, points, clr, type, maskID, i);
             }
         },
         getImageInfo(){

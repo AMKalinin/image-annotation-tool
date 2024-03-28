@@ -1,6 +1,11 @@
 <template>
     <div class="controlEdit">
-        <mask-list :masks="masks" :classList="classList"/>
+        <mask-list 
+            :masks="masks" 
+            :classList="classList"
+            @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
+            @changeMaskBacklightFlag="changeMaskBacklightFlag"
+        />
     </div>
 </template>
 
@@ -19,6 +24,14 @@ export default{
             required: true
         }
     },
+    methods:{
+        changeMaskVisibilityFlag(index){
+            this.$emit('changeMaskVisibilityFlag', index)
+        },
+        changeMaskBacklightFlag(index){
+            this.$emit('changeMaskBacklightFlag', index)
+        }
+    }
 }
 </script>
 

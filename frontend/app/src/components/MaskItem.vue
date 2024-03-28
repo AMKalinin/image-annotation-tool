@@ -1,12 +1,15 @@
 <template>
-    <div class="maska">
+    <div class="maska" 
+        :id="'mask_'+mask.id"
+        @mouseenter="mouseenter"
+        @mouseleave="mouseleave">
         <div class="colorImg" :style="'background:' + ';'"></div>
 
         <div class="contentMask">
             <label class="maskName">Name: {{mask.id}}</label> <br>
             
             <label class="check" ondblclick="event.stopPropagation();">
-                <input value="{{mask.points}}" type="checkbox" class="maskaViewCheck">
+                <input value="{{mask.points}}" type="checkbox" class="maskaViewCheck" :onchange="visibleCheck">
                 <span class="checkbox"></span>
             </label>
 
@@ -69,6 +72,31 @@ export default{
         classList:{
             type: Array,
             required: true
+        }
+    },
+    watch:{
+        mask:{
+            handler(newVal){
+                let maskControl = document.getElementById('mask_'+newVal.id)
+                    if (newVal.backlightFlag){
+                        maskControl.style.background = 'LightGrey'
+                    }
+                    else{
+                        maskControl.style.background = 'White'
+                    }
+            },
+            deep: true
+        }
+    },
+    methods:{
+        mouseenter(){
+            this.$emit('changeMaskBacklightFlag', this.mask.index)
+        },
+        mouseleave(){
+            this.$emit('changeMaskBacklightFlag', this.mask.index)
+        },
+        visibleCheck(){
+            this.$emit('changeMaskVisibilityFlag', this.mask.index)
         }
     }
 }
