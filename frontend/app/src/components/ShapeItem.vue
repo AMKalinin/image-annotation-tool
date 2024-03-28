@@ -41,11 +41,9 @@ export default{
     },
     methods:{
         mouseenter(){
-            console.log(52)
             this.$parent.$emit('changeMaskBacklightFlag', this.mask.id)
         },
         mouseleave(){
-            console.log(191)
             this.$parent.$emit('changeMaskBacklightFlag', this.mask.id)
         }
     }
