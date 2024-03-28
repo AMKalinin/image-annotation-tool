@@ -17,7 +17,7 @@ export default{
     components:{MaskList},
     props:{
         masks:{
-            type: Array,
+            type: Object,
             required: true
         },
         classList:{
@@ -26,14 +26,14 @@ export default{
         }
     },
     methods:{
-        changeMaskVisibilityFlag(index){
-            this.$emit('changeMaskVisibilityFlag', index)
+        changeMaskVisibilityFlag(maskId){
+            this.$emit('changeMaskVisibilityFlag', maskId)
         },
-        changeMaskBacklightFlag(index){
-            this.$emit('changeMaskBacklightFlag', index)
+        changeMaskBacklightFlag(maskId){
+            this.$emit('changeMaskBacklightFlag', maskId)
         },
-        deleteMask(index){
-            this.$emit('deleteMask', index)
+        deleteMask(maskId){
+            this.$emit('deleteMask', maskId)
         }
     }
 }

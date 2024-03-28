@@ -10,13 +10,16 @@
             @mousedown="mouseDown"
             @mousemove="mouseMove"
             @mouseup="mouseUp"
-            ></svg>
+            >
+            <shape-item v-for="(mask, key) in masks" :key="key" :mask="mask"/>
+        </svg>
     </div>
 </template>
 
 
 <script>
 import TileNet from '@/components/TileNet.vue'
+import ShapeItem from '@/components/ShapeItem.vue'
 import axios from 'axios'
 import { SVG } from '@svgdotjs/svg.js'
 
@@ -44,73 +47,16 @@ export default{
     },
     props:{
         masks:{
-            type: Array
-        }
-    },
-    watch:{
-        masks:{
-            handler(newVal){
-                for (let i=0; i<newVal.length; i++){
-                    let maskShape = document.getElementById('shape_' + newVal[i].id)
-                    if(!maskShape){return}
-                    if(newVal[i].visibilityFlag){
-                        maskShape.style.display = ''
-                        if (newVal[i].backlightFlag){
-                            maskShape.style.fill = newVal[i].color_code+'bb'
-                        }
-                        else{
-                            maskShape.style.fill = newVal[i].color_code+'55'
-                        }   
-                    }
-                    else{
-                        maskShape.style.display = 'none'
-                    }
-                }
-            },
-            deep: true
+            type: Object
         }
     },
     mounted() {
         this.getImageInfo()
     },
-    updated(){
-        this.createAllMask()
-    },
     created() {
         document.addEventListener('keydown', this.onKeyDown)
     },
     methods: {
-        createMask(svg, points, clr, type, maskID, index){
-            let objMaska
-            let tmpPoints = []
-            for (let i=0; i<points.length; i++){
-                tmpPoints.push([points[i][0],points[i][1]])
-            }
-            if(type==='polygon'){
-                objMaska = svg.polygon(tmpPoints)
-            }
-            objMaska.fill(clr+'55')
-                .stroke({ width: 2,  color: clr})
-                .id("shape_"+maskID)
-                .on('mouseenter', ()=>{
-                    this.$emit('changeMaskBacklightFlag', index)
-                    })
-                .on('mouseleave', ()=>{
-                    this.$emit('changeMaskBacklightFlag', index)  
-                })
-                // .hide()
-        },
-        createAllMask(){
-            let canvas = SVG('#canvas')
-            for (let i=0; i<this.masks.length; i++){
-                let points = this.masks[i].points
-                let clr = this.masks[i].color_code
-                let type = this.masks[i].type
-                let maskID = this.masks[i].id
-
-                this.createMask(canvas, points, clr, type, maskID, i);
-            }
-        },
         getImageInfo(){
             let tileNet = document.getElementById('tileNet')
             this.imageInfo.projectName = this.$route.params.projectName
@@ -659,7 +605,7 @@ export default{
             axios.post(url, info).then(handler)
         }
     },
-    components:{TileNet}
+    components:{TileNet, ShapeItem}
     
 }
 </script>

@@ -28,19 +28,19 @@ export default{
     components:{ToolBar, ViewEdit, ControlEdit},
     data(){
         return{
-            masks: [],
+            masks: {},
             classList: []
         }
     },
     mounted(){
         axios.get('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks').then((response) => {
-            this.masks = response.data
-            // TODO Нужно сделать конвертацию из строки в массив точек СДЕЛАНО!!!!!!!!!!!!!!
-            for (let i=0; i<this.masks.length; i++){
-                this.masks[i].index = i
-                this.masks[i].visibilityFlag = true
-                this.masks[i].backlightFlag = false
-                this.masks[i].points = this.strToPointList(this.masks[i].points)
+            let maskList = response.data
+            for (let i=0; i<maskList.length; i++){
+                maskList[i].index = i
+                maskList[i].visibilityFlag = true
+                maskList[i].backlightFlag = false
+                maskList[i].points = this.strToPointList(maskList[i].points)
+                this.masks[maskList[i].id] = maskList[i]
             }
         })
         axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
@@ -58,15 +58,15 @@ export default{
             }
         return pointsNumber
         },
-        changeMaskVisibilityFlag(index){
-            this.masks[index].visibilityFlag = !this.masks[index].visibilityFlag 
+        changeMaskVisibilityFlag(maskId){
+            this.masks[maskId].visibilityFlag = !this.masks[maskId].visibilityFlag 
         },
-        changeMaskBacklightFlag(index){
-            this.masks[index].backlightFlag = !this.masks[index].backlightFlag 
+        changeMaskBacklightFlag(maskId){
+            this.masks[maskId].backlightFlag = !this.masks[maskId].backlightFlag 
         },
-        deleteMask(index){
-            this.masks.splice(index, 1)
-            console.log(123)
+        deleteMask(maskId){
+            delete this.masks[maskId]
+            // Надо отправить запрос об удалении на бэк
         }
     }
 }

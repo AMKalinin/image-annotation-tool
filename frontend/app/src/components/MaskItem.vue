@@ -91,17 +91,16 @@ export default{
     },
     methods:{
         mouseenter(){
-            this.$emit('changeMaskBacklightFlag', this.mask.index)
+            this.$emit('changeMaskBacklightFlag', this.mask.id)
         },
         mouseleave(){
-            this.$emit('changeMaskBacklightFlag', this.mask.index)
+            this.$emit('changeMaskBacklightFlag', this.mask.id)
         },
         visibleCheck(){
-            this.$emit('changeMaskVisibilityFlag', this.mask.index)
+            this.$emit('changeMaskVisibilityFlag', this.mask.id)
         },
         deleteMask(){
-            console.log(this.mask.index)
-            // this.$emit('deleteMask', this.mask.index)
+            this.$emit('deleteMask', this.mask.id)
         }
     }
 }
