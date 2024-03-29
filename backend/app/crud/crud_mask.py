@@ -44,9 +44,13 @@ class CRUDMask():
                         color_code=classes.color_code)
         return mask_out
     
-    def delete(self, db:Session):
-        #TODO
-        ...
+    def delete_by_id(self, db:Session, project_name:str, task_id:int, mask_id:int):
+        mask = db.query(Mask).get({'project_name':project_name,
+                                   'task_id': task_id,
+                                   'id': mask_id
+                                   })
+        db.delete(mask)
+        db.commit()
 
     def update(self, db:Session):
         #TODO

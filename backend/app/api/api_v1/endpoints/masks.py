@@ -24,7 +24,6 @@ def update_mask(project_name:str, task_id:int, mask_id:int) -> Any:
     ...
 
 @router.delete('/{mask_id}')
-def delete_mask(project_name:str, task_id:int, mask_id:int) -> Any:
-    #TODO
-    ...
+def delete_mask(*, db: Session = Depends(deps.get_db), project_name:str, task_id:int, mask_id:int) -> Any:
+    crud.mask.delete_by_id(db, project_name, task_id, mask_id)
     

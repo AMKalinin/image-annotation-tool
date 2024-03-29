@@ -64,7 +64,9 @@ export default{
             this.masks[maskId].backlightFlag = !this.masks[maskId].backlightFlag 
         },
         deleteMask(maskId){
-            delete this.masks[maskId]
+            axios.delete('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks/'+maskId).then(() => {
+                delete this.masks[maskId]
+            })
             // Надо отправить запрос об удалении на бэк
         },
         addMask(maskItem){
