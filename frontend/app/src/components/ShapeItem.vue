@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { SVG } from '@svgdotjs/svg.js'
+
 export default{
     props:{
         mask:{
@@ -37,6 +39,14 @@ export default{
                 }
             },
             deep: true
+        }
+    },
+    mounted(){
+        if(this.mask.transform){
+            let polyg = SVG('#shape_'+this.mask.id)
+            polyg.transform({translateX: this.mask.transform.translateX, 
+                                translateY: this.mask.transform.translateY})
+            console.log(polyg)
         }
     },
     methods:{

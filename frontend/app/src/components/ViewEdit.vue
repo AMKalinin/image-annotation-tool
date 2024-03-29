@@ -577,14 +577,6 @@ export default{
         },
         sendInfo(){
             let url = process.env.VUE_APP_BASE_URL + '/projects/'+this.$route.params.projectName+'/tasks/'+ this.$route.params.id +'/masks/create'
-            if (this.curShape.object){
-                this.curShape.object.remove();
-                this.curShape.object = null;
-                if(this.curShape.group){
-                    this.curShape.group.remove();
-                    this.curShape.group = null;
-                }  
-            }
 
             let info = {
                 "project_name": this.imageInfo.projectName,
@@ -598,8 +590,25 @@ export default{
                 info.points[i] = [Math.trunc(info.points[i][0]*Math.pow(2,this.imageInfo.curLayer)), Math.trunc(info.points[i][1]*Math.pow(2,this.imageInfo.curLayer))]
             }
 
-            let handler = ()=>{
-               this.curShape.points = []
+            let handler = (response)=>{
+                let maskItem = response.data
+                for(let i=0; i< this.curShape.points.length; i++){
+                    this.curShape.points[i] = [Math.trunc( this.curShape.points[i][0]/Math.pow(2,this.imageInfo.curLayer)), Math.trunc( this.curShape.points[i][1]/Math.pow(2,this.imageInfo.curLayer))]
+                }
+                maskItem.points = this.curShape.points
+                maskItem.transform = this.curShape.object.transform()
+                
+                this.curShape.points = []
+                if (this.curShape.object){
+                    this.curShape.object.remove();
+                    this.curShape.object = null;
+                    if(this.curShape.group){
+                        this.curShape.group.remove();
+                        this.curShape.group = null;
+                    }  
+                }
+
+                this.$emit('addMask', maskItem)
             }
             info.points = info.points.join('|') 
             axios.post(url, info).then(handler)

@@ -6,7 +6,8 @@
             :masks="masks" 
             ref="childComponent"
             @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
-            @changeMaskBacklightFlag="changeMaskBacklightFlag">
+            @changeMaskBacklightFlag="changeMaskBacklightFlag"
+            @addMask="addMask">
         </View-Edit>
         <control-edit
             :masks="masks"
@@ -36,7 +37,6 @@ export default{
         axios.get('/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks').then((response) => {
             let maskList = response.data
             for (let i=0; i<maskList.length; i++){
-                maskList[i].index = i
                 maskList[i].visibilityFlag = true
                 maskList[i].backlightFlag = false
                 maskList[i].points = this.strToPointList(maskList[i].points)
@@ -54,7 +54,6 @@ export default{
             for (let i=0; i<pointsList.length; i++){
                 let tmp = pointsList[i].split(',')
                 pointsNumber.push([Number(tmp[0]),Number(tmp[1])])
-                pointsNumber.push()
             }
         return pointsNumber
         },
@@ -67,6 +66,11 @@ export default{
         deleteMask(maskId){
             delete this.masks[maskId]
             // Надо отправить запрос об удалении на бэк
+        },
+        addMask(maskItem){
+            maskItem.visibilityFlag = true
+            maskItem.backlightFlag = false
+            this.masks[maskItem.id] = maskItem
         }
     }
 }
