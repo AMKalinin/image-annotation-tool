@@ -28,10 +28,21 @@ class CRUDMask():
                         type=mask_in.type,
                         class_code=mask_in.class_code,
                         points=mask_in.points)
+        
         db.add(db_mask)
         db.commit()
         db.refresh(db_mask)
-        return db_mask
+        
+        classes = db.query(Classes).filter( Classes.code == db_mask.class_code).one()
+
+        mask_out =MaskOut(id=db_mask.id,
+                        project_name=db_mask.project_name,
+                        task_id=db_mask.task_id,
+                        type=db_mask.type,
+                        class_code=db_mask.class_code,
+                        points=db_mask.points,
+                        color_code=classes.color_code)
+        return mask_out
     
     def delete(self, db:Session):
         #TODO

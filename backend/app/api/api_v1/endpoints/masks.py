@@ -13,8 +13,8 @@ router = APIRouter()
 def get_all_mask_in_task(*, db: Session = Depends(deps.get_db), project_name:str, task_id:int):
     return crud.mask.get_all(db, project_name, task_id)
 
-@router.post('/create', response_model=MaskBase)
-def create_mask(*, db: Session = Depends(deps.get_db), mask_in: MaskBase) -> Any:
+@router.post('/create')
+def create_mask(*, db: Session = Depends(deps.get_db), mask_in: MaskBase):
     mask = crud.mask.create(db, mask_in)
     return mask
 
