@@ -46,7 +46,6 @@ export default{
             let polyg = SVG('#shape_'+this.mask.id)
             polyg.transform({translateX: this.mask.transform.translateX, 
                                 translateY: this.mask.transform.translateY})
-            console.log(polyg)
         }
     },
     methods:{
