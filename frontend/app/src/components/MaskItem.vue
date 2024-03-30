@@ -59,8 +59,6 @@ import imageTrash from '../images/trash.svg';
 export default{
     data(){
         return{
-            projectName: 'asd',
-            taskIndex: 0,
             imageTrash,
             typeMask:0
         }

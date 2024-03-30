@@ -1,5 +1,8 @@
 <template>
     <div class="controlEdit">
+        <tool-mask
+            :classList="classList"
+        />
         <mask-list 
             :masks="masks" 
             :classList="classList"
@@ -12,9 +15,10 @@
 
 <script>
 import MaskList from '@/components/MaskList.vue';
+import ToolMask from '@/components/ToolMask.vue';
 
 export default{
-    components:{MaskList},
+    components:{MaskList, ToolMask},
     props:{
         masks:{
             type: Object,

@@ -14,7 +14,9 @@
             :classList="classList"
             @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
             @changeMaskBacklightFlag="changeMaskBacklightFlag"
-            @deleteMask="deleteMask">
+            @deleteMask="deleteMask"
+            @showAll="showAll"
+            @hideAll="hideAll">
         </control-edit>
     </div>
 </template>
@@ -73,6 +75,21 @@ export default{
             maskItem.visibilityFlag = true
             maskItem.backlightFlag = false
             this.masks[maskItem.id] = maskItem
+        },
+        showAll(){
+            for (const [key, val] of Object.entries(this.masks)){
+                val.visibilityFlag = true
+                let masksControl = document.getElementById('mask_'+key)
+                masksControl.getElementsByTagName('input')[0].checked = false
+                
+            }
+        },                                                                                      // show and hide возможно переписать на сигналы в maskItem
+        hideAll(){
+            for (const [key, val] of Object.entries(this.masks)){
+                val.visibilityFlag = false
+                let masksControl = document.getElementById('mask_'+key)
+                masksControl.getElementsByTagName('input')[0].checked = true
+            }
         }
     }
 }
