@@ -3,7 +3,8 @@
         <Tool-Bar class="tool"></Tool-Bar>
         <View-Edit 
             class="edit" 
-            :masks="masks" 
+            :masks="masks"
+            :selectClass="selectClass"
             ref="childComponent"
             @changeMaskVisibilityFlag="changeMaskVisibilityFlag"
             @changeMaskBacklightFlag="changeMaskBacklightFlag"
@@ -16,7 +17,8 @@
             @changeMaskBacklightFlag="changeMaskBacklightFlag"
             @deleteMask="deleteMask"
             @showAll="showAll"
-            @hideAll="hideAll">
+            @hideAll="hideAll"
+            @changeClassCode="changeClassCode">
         </control-edit>
     </div>
 </template>
@@ -32,7 +34,8 @@ export default{
     data(){
         return{
             masks: {},
-            classList: []
+            classList: [],
+            selectClass: null
         }
     },
     mounted(){
@@ -47,6 +50,7 @@ export default{
         })
         axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
             this.classList = response.data
+            this.selectClass = this.classList[0].code
         })
     },
     methods: {
@@ -90,6 +94,9 @@ export default{
                 let masksControl = document.getElementById('mask_'+key)
                 masksControl.getElementsByTagName('input')[0].checked = true
             }
+        },
+        changeClassCode(classCode){
+            this.selectClass = classCode
         }
     }
 }

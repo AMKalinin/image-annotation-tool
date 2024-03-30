@@ -30,7 +30,6 @@ export default{
             curShape:{
                 points: [],
                 type: null,
-                code: '000',
                 tellApartDistance: 5,
                 pointIndex:-1,
                 object: null,
@@ -48,6 +47,9 @@ export default{
     props:{
         masks:{
             type: Object
+        },
+        selectClass:{
+            type: Number
         }
     },
     mounted() {
@@ -582,7 +584,7 @@ export default{
                 "project_name": this.imageInfo.projectName,
                 "task_id": Number(this.imageInfo.taskId),
                 "type": "polygon",  //Поменять когда добавятся разные классы
-                "class_code": 3,
+                "class_code": this.selectClass,
                 "points": this.curShape.points
                 }
             

@@ -2,7 +2,7 @@
     <div class="toolMask">
         <a id="showAll" @mousedown="hide"><img :src="imageShow" title="Показать все маски"></a>
         <a id="hideAll" style="display: none;" @mousedown="show"><img :src="imageHide" title="Скрыть все маски"></a>
-        <select id="maskClassBase">
+        <select id="maskClassBase" @change="changeClassCode">
             <template v-for="cls in classList" :key="cls.code">
                 <option :value="cls.code">{{cls.name}}</option>
             </template>
@@ -41,6 +41,10 @@ export default{
             document.getElementById('hideAll').style.display = 'none'
             this.$parent.$emit('showAll')
         },
+        changeClassCode(){
+            let classCode = document.getElementById('maskClassBase').value
+            this.$parent.$emit('changeClassCode', Number(classCode))
+        }
     }
 }
 </script>
