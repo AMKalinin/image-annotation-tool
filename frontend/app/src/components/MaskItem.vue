@@ -24,10 +24,11 @@
 
             <label class="type">Type: {{mask.type}} </label> <br>
             <label v-if="typeMask === 0">Class:   
-                <select class="selectClass">
+                <select class="selectClass" @change="changeMaskClassCode">
                     <template v-for="cls in classList" :key="cls.code">
                         <option 
                             v-if="mask.class_code == cls.code"
+                            :value="cls.code"
                             >
                             {{cls.name}}
                         </option>
@@ -35,6 +36,7 @@
                     <template v-for="cls in classList" :key="cls.code">
                         <option 
                             v-if="mask.class_code != cls.code"
+                            :value="cls.code"
                             >
                             {{cls.name}}
                         </option>
@@ -54,6 +56,7 @@
 </template>
 
 <script>
+// import axios from 'axios';
 import imageTrash from '../images/trash.svg';
 
 export default{
@@ -99,6 +102,12 @@ export default{
         },
         deleteMask(){
             this.$emit('deleteMask', this.mask.id)
+        },
+        changeMaskClassCode(){
+            let newCls = Number(this.$el.getElementsByClassName('selectClass')[0].value)
+            // let url = '/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks/'+this.mask.id
+            // axios.put(url,null, {params:{'new_class_code':newCls}})
+            this.$parent.$parent.$emit('changeMaskClassCode',this.mask.id, newCls)
         }
     }
 }

@@ -18,7 +18,8 @@
             @deleteMask="deleteMask"
             @showAll="showAll"
             @hideAll="hideAll"
-            @changeClassCode="changeClassCode">
+            @changeClassCode="changeClassCode"
+            @changeMaskClassCode="changeMaskClassCode">
         </control-edit>
     </div>
 </template>
@@ -47,6 +48,7 @@ export default{
                 maskList[i].points = this.strToPointList(maskList[i].points)
                 this.masks[maskList[i].id] = maskList[i]
             }
+            console.log(this.masks)
         })
         axios.get('/projects/'+this.$route.params.projectName+'/classes').then((response) => {
             this.classList = response.data
@@ -97,6 +99,21 @@ export default{
         },
         changeClassCode(classCode){
             this.selectClass = classCode
+        },
+        changeMaskClassCode(maskId, newCls){
+            console.log(8181248)
+            let colorCode
+            for (let i=0; i<this.classList.length; i++){
+                if (this.classList[i].code===newCls){
+                    colorCode = this.classList[i].color_code
+                }
+            }   
+            let url = '/projects/'+this.$route.params.projectName+'/tasks/'+this.$route.params.id+'/masks/'+maskId
+            let handler = ()=>{
+                this.masks[maskId].class_code = newCls
+                this.masks[maskId].color_code = colorCode
+            }
+            axios.put(url,null, {params:{'new_class_code':newCls}}).then(handler)
         }
     }
 }
