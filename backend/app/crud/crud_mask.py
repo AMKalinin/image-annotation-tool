@@ -52,8 +52,12 @@ class CRUDMask():
         db.delete(mask)
         db.commit()
 
-    def update(self, db:Session):
-        #TODO
-        ...
+    def change_class_code(self, db:Session, project_name:str, task_id:int, mask_id:int, new_class_code:int):
+        mask = db.query(Mask).get({'project_name':project_name,
+                                'task_id': task_id,
+                                'id': mask_id
+                                })
+        mask.class_code = new_class_code
+        db.commit()
 
 mask = CRUDMask() 

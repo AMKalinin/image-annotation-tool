@@ -19,9 +19,8 @@ def create_mask(*, db: Session = Depends(deps.get_db), mask_in: MaskBase):
     return mask
 
 @router.put('/{mask_id}')
-def update_mask(project_name:str, task_id:int, mask_id:int) -> Any:
-    #TODO
-    ...
+def update_mask(*, db: Session = Depends(deps.get_db), project_name:str, task_id:int, mask_id:int, new_class_code:int) -> Any:
+    crud.mask.change_class_code(db, project_name, task_id, mask_id, new_class_code)
 
 @router.delete('/{mask_id}')
 def delete_mask(*, db: Session = Depends(deps.get_db), project_name:str, task_id:int, mask_id:int) -> Any:
